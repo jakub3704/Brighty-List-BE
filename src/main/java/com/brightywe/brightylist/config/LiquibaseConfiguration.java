@@ -1,4 +1,4 @@
-package com.brightywe.brightylist.liquibase;
+package com.brightywe.brightylist.config;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import liquibase.integration.spring.SpringLiquibase;
 
-import com.brightywe.brightylist.config.DatabaseConfiguration;
 import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
@@ -21,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 @Configuration
 @AutoConfigureAfter(DatabaseConfiguration.class)
-@PropertySource({ "classpath:liquibase.properties"})
+@PropertySource({"classpath:liquibase.properties"})
 public class LiquibaseConfiguration implements InitializingBean {
 
     private Logger log = LoggerFactory.getLogger(LiquibaseConfiguration.class);
