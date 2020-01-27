@@ -16,7 +16,7 @@ public class UserDto {
     private Long id;
 
     @NotBlank
-    @Size(min = 3, max = 99)
+    @Size(min = 3, max = 255)
     private String name;
 
     @NotBlank
@@ -24,7 +24,7 @@ public class UserDto {
     private String eMail;
 
     @NotBlank
-    @Size(min = 3, max = 99)
+    @Size(min = 3, max = 255)
     private String password;
 
     @Enumerated(EnumType.STRING)

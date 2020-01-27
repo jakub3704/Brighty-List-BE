@@ -13,12 +13,7 @@ public class BrightyResourceServerConfig extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/about").permitAll()
-            .antMatchers("/signup").permitAll()
-            .antMatchers("/admin").hasAuthority("ADMIN")
-            .antMatchers("/users").hasAuthority("ADMIN")
-            .antMatchers("/mockuser").hasAuthority("USER")
-            .antMatchers("/mockpremium").hasAnyAuthority("PREMIUM", "ADMIN")
+            .antMatchers("/").permitAll()        
          .and()
             .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }

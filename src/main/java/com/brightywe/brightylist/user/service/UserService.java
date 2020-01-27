@@ -49,7 +49,7 @@ public class UserService {
     
     public UserDto createUserWithBasicAuthority(@Valid UserDto userDto) {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userDto.setRole(Role.USER);
+        userDto.setRole(Role.ROLE_USER);
         User user = new User();
         return mapToUserDto(userRepository.save(mapToUser(userDto, user)));
     }

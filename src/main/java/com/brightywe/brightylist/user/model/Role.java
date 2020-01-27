@@ -1,6 +1,6 @@
 package com.brightywe.brightylist.user.model;
 
 public enum Role {
-    USER, ADMIN, PREMIUM
+    ROLE_ADMIN, ROLE_USER, ROLE_PREMIUM_USER
 }
 

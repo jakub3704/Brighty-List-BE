@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,17 +22,19 @@ import com.brightywe.brightylist.user.model.UserDto;
 import com.brightywe.brightylist.user.service.UserService;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    
+    @PreAuthorize("permitAll()")
     @GetMapping("/signup")
     public String info() {
-        return "Post user in form {\"name\":\"your_input, \"mail\":\"your_input, \"password\":\"your_input\"}";
+        return "SignUp";
     }
     
+    @PreAuthorize("permitAll()")
     @PostMapping("/signup")
     public UserDto createUserWithBasicAuthority(@Valid @RequestBody UserDto userDto) {
         return userService.createUserWithBasicAuthority(userDto);
@@ -52,7 +55,7 @@ public class UserController {
         return userService.getUserByName(userName);
     }
 
-    @PostMapping
+    @PostMapping("/users")
     public UserDto createUser(@Valid @RequestBody UserDto userDto) {
         return userService.createUser(userDto);
     }
