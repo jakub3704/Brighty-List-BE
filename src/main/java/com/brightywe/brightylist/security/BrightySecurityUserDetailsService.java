@@ -2,16 +2,13 @@ package com.brightywe.brightylist.security;
 
 import java.util.Arrays;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.brightywe.brightylist.user.model.Role;
 import com.brightywe.brightylist.user.model.UserDto;
 import com.brightywe.brightylist.user.model.UserLogInProperties;
 import com.brightywe.brightylist.user.service.UserService;
