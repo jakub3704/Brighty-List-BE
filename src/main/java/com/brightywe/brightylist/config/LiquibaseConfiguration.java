@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 @Configuration
 @AutoConfigureAfter(DatabaseConfiguration.class)
-@PropertySource({ "classpath:liquibase.properties" })
+@PropertySource({"classpath:liquibase.properties"})
 public class LiquibaseConfiguration implements InitializingBean {
 
     private Logger log = LoggerFactory.getLogger(LiquibaseConfiguration.class);
@@ -33,14 +33,15 @@ public class LiquibaseConfiguration implements InitializingBean {
     @Bean
     @ConfigurationProperties("migration.datasource")
     public DataSourceProperties migrationDataSourceProperties() {
-        return new DataSourceProperties();
+	return new DataSourceProperties();
     }
 
     @LiquibaseDataSource
     @Bean(name = "migrationDataSource")
     @ConfigurationProperties(prefix = "migration.datasource")
     public DataSource migrationDataSource() {
-        DataSource ds = migrationDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class)
+    	DataSource ds = migrationDataSourceProperties().initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
                 .build();
         if (ds instanceof HikariDataSource) {
             ((HikariDataSource) ds).setMaximumPoolSize(2);
