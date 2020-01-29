@@ -22,7 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@PropertySource({"classpath:database.properties"})
+@PropertySource({ "classpath:database.properties" })
 public class DatabaseConfiguration implements InitializingBean {
 
     private Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
@@ -35,9 +35,7 @@ public class DatabaseConfiguration implements InitializingBean {
     @Primary
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("entityManagerFactory") EntityManagerFactory
-                    entityManagerFactory
-    ) {
+            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
         transactionManager.setPersistenceUnitName("BrightyWe");
         return transactionManager;
@@ -50,22 +48,19 @@ public class DatabaseConfiguration implements InitializingBean {
         DataSourceProperties dataSourceProperties = new DataSourceProperties();
         return dataSourceProperties;
     }
+
     @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public DataSource dataSource(DataSourceProperties dataSourceProperties) {
-        return dataSourceProperties.initializeDataSourceBuilder()
-                .type(HikariDataSource.class)
-                .build();
+        return dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 
     @Primary
     @Bean(name = "entityManagerFactory")
-    LocalContainerEntityManagerFactoryBean internalEntityManagerFactory(EntityManagerFactoryBuilder builder, @Qualifier("dataSource") DataSource dataSource) {
-        return builder.dataSource(dataSource)
-                .packages("com.brightywe")
-                .persistenceUnit("BrightyWe")
-                .build();
+    LocalContainerEntityManagerFactoryBean internalEntityManagerFactory(EntityManagerFactoryBuilder builder,
+            @Qualifier("dataSource") DataSource dataSource) {
+        return builder.dataSource(dataSource).packages("com.brightywe").persistenceUnit("BrightyWe").build();
     }
 
     @Primary
