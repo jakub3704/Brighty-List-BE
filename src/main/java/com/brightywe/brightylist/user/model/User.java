@@ -1,9 +1,13 @@
 package com.brightywe.brightylist.user.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.brightywe.brightylist.task.model.Task;
 
 @Entity
 @Table(name = "users")
@@ -28,6 +32,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany
+    private List<Task> tasks;
+    
     public String getName() {
         return name;
     }
@@ -62,6 +69,22 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

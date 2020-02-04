@@ -1,18 +1,17 @@
 package com.brightywe.brightylist.task.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.brightywe.brightylist.reminder.model.Reminder;
 
 @Entity
 @Table(name = "tasks")
@@ -21,7 +20,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-
+    
+    @NotNull
+    private Long userId;
+    
     @NotBlank
     @Size(min = 3, max = 255)
     private String title;
@@ -33,17 +35,22 @@ public class Task {
     @Max(3)
     @NotNull
     private Integer priority;
-
-    private LocalDateTime deadline;
-
-    private LocalDateTime reminder;
-
+    
     @Column(name = "start_time")
     private LocalDateTime startTime;
+    
+    @Column(name = "end_time")    
+    private LocalDateTime endTime;
 
     @Column(name = "completed_time")
     private LocalDateTime completedTime;
-
+    
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+    
+    @OneToMany
+    private List<Reminder> reminders = new ArrayList<>();
+    
     public Task() {
     };
 
@@ -75,22 +82,6 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
-
-    public LocalDateTime getReminder() {
-        return reminder;
-    }
-
-    public void setReminder(LocalDateTime reminder) {
-        this.reminder = reminder;
-    }
-
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -107,6 +98,38 @@ public class Task {
         this.completedTime = completedTime;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders = reminders;
+    }
+    
     @Override
     public String toString() {
         return "Task[id=" + taskId + ", title=" + title + ", priority=" + priority + "]";

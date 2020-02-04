@@ -35,13 +35,13 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto createTask(@Valid @RequestBody TaskDto task) {
-        return taskService.createTask(task);
+    public TaskDto createTask(@Valid @RequestBody TaskDto taskDto) {
+        return taskService.createTask(taskDto);
     }
 
     @PutMapping("/{taskId}")
-    public TaskDto updateTask(@PathVariable(value = "taskId") Long taskId, @Valid @RequestBody TaskDto task) {
-        return taskService.updateTask(taskId, task);
+    public TaskDto updateTask(@PathVariable(value = "taskId") Long taskId, @Valid @RequestBody TaskDto taskDto) {
+        return taskService.updateTask(taskId, taskDto);
     }
 
     @DeleteMapping("/{taskId}")

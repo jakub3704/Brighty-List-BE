@@ -1,5 +1,6 @@
 package com.brightywe.brightylist.task.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +10,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.brightywe.brightylist.reminder.model.Reminder;
+import com.brightywe.brightylist.reminder.model.ReminderDto;
+import com.brightywe.brightylist.reminder.repository.ReminderRepository;
 import com.brightywe.brightylist.task.model.Task;
 import com.brightywe.brightylist.task.model.TaskDto;
 import com.brightywe.brightylist.task.repository.TaskRepository;
@@ -18,19 +22,29 @@ public class TaskService {
 
     @Autowired
     TaskRepository taskRepository;
-
+    
+    @Autowired
+    ReminderRepository reminderRepository;
+    
     public List<TaskDto> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();        
+        for (Task task : tasks) {
+            List<Reminder> reminders = reminderRepository.findAllByTaskId(task.getTaskId());
+            task.setReminders(reminders);
+        }        
         return tasks.stream().map(x -> mapToTaskDto(x)).collect(Collectors.toList());
     }
 
     public TaskDto getTaskById(Long taskId) {
-        return mapToTaskDto(taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task with id=[" + taskId + "] was not found")));
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task with id=[" + taskId + "] was not found"));
+        List<Reminder> reminders = reminderRepository.findAllByTaskId(task.getTaskId());
+        task.setReminders(reminders);
+        return mapToTaskDto(task);
     }
 
     public TaskDto createTask(@Valid TaskDto taskDto) {
-        Task task = new Task();
+        Task task = new Task();   
         return mapToTaskDto(taskRepository.save(mapToTask(taskDto, task)));
     }
 
@@ -50,26 +64,46 @@ public class TaskService {
     }
 
     Task mapToTask(TaskDto taskDto, Task task) {
+        task.setUserId(taskDto.getUserId());
         task.setTitle(taskDto.getTitle());
         task.setNotes(taskDto.getNotes());
         task.setPriority(taskDto.getPriority());
-        task.setDeadline(taskDto.getDeadline());
-        task.setReminder(taskDto.getReminder());
         task.setStartTime(taskDto.getStartTime());
+        task.setEndTime(taskDto.getEndTime());
         task.setCompletedTime(taskDto.getCompletedTime());
+        task.setStatus(taskDto.getStatus());
+             
+        if (!taskDto.getReminders().isEmpty()) {
+        List<Reminder> reminders = new ArrayList<>();   
+        for (ReminderDto reminderDto : taskDto.getReminders()) {
+            reminders.add(new Reminder(reminderDto));
+        };
+        task.setReminders(reminders);
+        }
+        
         return task;
     }
 
     TaskDto mapToTaskDto(Task task) {
         TaskDto taskDto = new TaskDto();
         taskDto.setTaskId(task.getTaskId());
+        taskDto.setUserId(task.getUserId());
         taskDto.setTitle(task.getTitle());
         taskDto.setNotes(task.getNotes());
         taskDto.setPriority(task.getPriority());
-        taskDto.setDeadline(task.getDeadline());
-        taskDto.setReminder(task.getReminder());
         taskDto.setStartTime(task.getStartTime());
+        taskDto.setEndTime(task.getEndTime());
         taskDto.setCompletedTime(task.getCompletedTime());
+        taskDto.setStatus(task.getStatus());
+        
+        if (!task.getReminders().isEmpty()) {
+        List<ReminderDto> remindersDto = new ArrayList<>();   
+        for (Reminder reminder : task.getReminders()) {
+            remindersDto.add(new ReminderDto(reminder));
+        };
+        taskDto.setReminders(remindersDto);
+        }
+        
         return taskDto;
     }
 

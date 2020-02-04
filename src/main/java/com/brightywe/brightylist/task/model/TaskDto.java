@@ -1,11 +1,19 @@
 package com.brightywe.brightylist.task.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.*;
+
+import com.brightywe.brightylist.reminder.model.ReminderDto;
 
 public class TaskDto {
 
     private Long taskId;
+
+    @NotNull
+    private Long userId;
 
     @NotBlank
     @Size(min = 3, max = 255)
@@ -19,10 +27,13 @@ public class TaskDto {
     @NotNull
     private Integer priority;
 
-    private LocalDateTime deadline;
-    private LocalDateTime reminder;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private LocalDateTime completedTime;
+
+    private TaskStatus status;
+
+    private List<ReminderDto> reminders = new ArrayList<>();
 
     public Long getTaskId() {
         return taskId;
@@ -56,22 +67,6 @@ public class TaskDto {
         this.priority = priority;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
-
-    public LocalDateTime getReminder() {
-        return reminder;
-    }
-
-    public void setReminder(LocalDateTime reminder) {
-        this.reminder = reminder;
-    }
-
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -86,6 +81,38 @@ public class TaskDto {
 
     public void setCompletedTime(LocalDateTime completedTime) {
         this.completedTime = completedTime;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public List<ReminderDto> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<ReminderDto> reminders) {
+        this.reminders = reminders;
     }
 
     @Override

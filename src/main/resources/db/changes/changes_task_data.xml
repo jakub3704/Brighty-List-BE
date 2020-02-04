@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="JK" id="1">
+
+        <insert tableName="tasks">
+            <column name="taskId" autoIncrement="true"
+                type="BIGINT" />
+            <column name="userId" value="1" type="BIGINT" />
+            <column name="title" value="Przykładowy Task nr 1"
+                type="VARCHAR(255)" />
+            <column name="notes"
+                value="Notatka - Przykładowy Task nr 1"
+                type="VARCHAR(500)" />
+            <column name="priority" value="1" type="INT" />
+        </insert>
+
+        <insert tableName="tasks">
+            <column name="taskId" autoIncrement="true"
+                type="BIGINT" />
+            <column name="userId" value="1" type="BIGINT" />
+            <column name="title" value="Przykładowy Task nr 2"
+                type="VARCHAR(255)" />
+            <column name="notes"
+                value="Notatka - Przykładowy Task nr 2"
+                type="VARCHAR(500)" />
+            <column name="priority" value="2" type="INT" />
+        </insert>
+
+        <insert tableName="reminders">
+            <column name="reminderId" autoIncrement="true"
+                type="BIGINT" />
+            <column name="taskId" value="1" type="BIGINT" />
+            <column name="message" value="message 1"
+                type="VARCHAR(255)" />
+            <column name="cron" value="0 0 0 ? * MON,THU *"
+                type="VARCHAR(500)" />
+        </insert>
+        
+        <insert tableName="reminders">
+            <column name="reminderId" autoIncrement="true"
+                type="BIGINT" />
+            <column name="taskId" value="1" type="BIGINT" />
+            <column name="message" value="message 2"
+                type="VARCHAR(255)" />
+            <column name="cron" value="0 0 0 ? * MON *"
+                type="VARCHAR(500)" />
+        </insert>
+
+
+    </changeSet>
+
+</databaseChangeLog>
