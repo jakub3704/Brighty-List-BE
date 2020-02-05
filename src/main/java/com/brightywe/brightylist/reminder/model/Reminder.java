@@ -1,10 +1,9 @@
 package com.brightywe.brightylist.reminder.model;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
+import com.brightywe.brightylist.task.model.Task;
 
 @Entity
 @Table(name = "reminders")
@@ -12,37 +11,32 @@ public class Reminder {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reminderId")
     private Long reminderId;
     
-    @NotNull
-    private Long taskId;
-    
+    @Column(name = "message")
     private String message;
     
     @NotBlank
+    @Column(name = "cron")
     private String cron;
-        
-    public Reminder() {
-        
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "taskId")
+    private Task task;
+    
+    public Reminder() {        
     }
     
     public Reminder(ReminderDto reminderDto) {
         this();
         this.reminderId = reminderDto.getReminderId();
-        //this.taskId = reminderDto.getTaskId();
         this.message = reminderDto.getMessage();
         this.cron = reminderDto.getCron();
     }
+    
     public Long getReminderId() {
         return reminderId;
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
     }
 
     public String getMessage() {
@@ -59,14 +53,14 @@ public class Reminder {
 
     public void setCron(String cron) {
         this.cron = cron;
+    }
+
+    public Task getTasks() {
+        return task;
+    }
+
+    public void setTasks(Task task) {
+        this.task = task;
     }   
     
-    @Override
-    public String toString() {
-        return "Reminder [reminderId=" + reminderId + 
-                            ", taskId=" + taskId + 
-                            ", message=" + message + 
-                            ", cron=" + cron + 
-                            "]";
-    }
 }

@@ -19,21 +19,26 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "taskId")
     private Long taskId;
     
     @NotNull
+    @Column(name = "userId")
     private Long userId;
     
     @NotBlank
     @Size(min = 3, max = 255)
+    @Column(name = "title")
     private String title;
 
     @Size(max = 500)
+    @Column(name = "notes")
     private String notes;
 
     @Min(1)
     @Max(3)
     @NotNull
+    @Column(name = "priority")
     private Integer priority;
     
     @Column(name = "start_time")
@@ -46,9 +51,10 @@ public class Task {
     private LocalDateTime completedTime;
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private TaskStatus status;
     
-    @OneToMany
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Reminder> reminders = new ArrayList<>();
     
     public Task() {
@@ -130,8 +136,4 @@ public class Task {
         this.reminders = reminders;
     }
     
-    @Override
-    public String toString() {
-        return "Task[id=" + taskId + ", title=" + title + ", priority=" + priority + "]";
-    }
 }

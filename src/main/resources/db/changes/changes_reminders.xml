@@ -11,7 +11,9 @@
         <createTable tableName="reminders">
             <column name="reminderId" autoIncrement="true"
                 type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"
+                    nullable="false" 
+                    foreignKeyName="fk_task_id"/>
             </column>
             <column name="taskId" type="BIGINT">
                 <constraints nullable="false" />
@@ -19,6 +21,15 @@
             <column name="message" type="VARCHAR(255)" />
             <column name="cron" type="VARCHAR(500)" />
         </createTable>
+        
+            <addForeignKeyConstraint
+                baseColumnNames="taskId" 
+                baseTableName="reminders" 
+                constraintName="fk_task_id"
+                onDelete="CASCADE" 
+                onUpdate="CASCADE"
+                referencedColumnNames="taskId"
+                referencedTableName="tasks" />
 
         <rollback>
             <dropTable tableName="reminders" />

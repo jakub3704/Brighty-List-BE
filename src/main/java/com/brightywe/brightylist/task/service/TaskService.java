@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.brightywe.brightylist.reminder.model.Reminder;
 import com.brightywe.brightylist.reminder.model.ReminderDto;
-import com.brightywe.brightylist.reminder.repository.ReminderRepository;
 import com.brightywe.brightylist.task.model.Task;
 import com.brightywe.brightylist.task.model.TaskDto;
 import com.brightywe.brightylist.task.repository.TaskRepository;
@@ -22,24 +21,15 @@ public class TaskService {
 
     @Autowired
     TaskRepository taskRepository;
-    
-    @Autowired
-    ReminderRepository reminderRepository;
-    
+        
     public List<TaskDto> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();        
-        for (Task task : tasks) {
-            List<Reminder> reminders = reminderRepository.findAllByTaskId(task.getTaskId());
-            task.setReminders(reminders);
-        }        
+        List<Task> tasks = taskRepository.findAll();          
         return tasks.stream().map(x -> mapToTaskDto(x)).collect(Collectors.toList());
     }
 
     public TaskDto getTaskById(Long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task with id=[" + taskId + "] was not found"));
-        List<Reminder> reminders = reminderRepository.findAllByTaskId(task.getTaskId());
-        task.setReminders(reminders);
         return mapToTaskDto(task);
     }
 
@@ -62,7 +52,7 @@ public class TaskService {
         }
         return false;
     }
-
+    
     Task mapToTask(TaskDto taskDto, Task task) {
         task.setUserId(taskDto.getUserId());
         task.setTitle(taskDto.getTitle());
@@ -72,8 +62,8 @@ public class TaskService {
         task.setEndTime(taskDto.getEndTime());
         task.setCompletedTime(taskDto.getCompletedTime());
         task.setStatus(taskDto.getStatus());
-             
-        if (!taskDto.getReminders().isEmpty()) {
+        
+        if (!taskDto.getReminders().isEmpty() && task.getReminders()!=null) {
         List<Reminder> reminders = new ArrayList<>();   
         for (ReminderDto reminderDto : taskDto.getReminders()) {
             reminders.add(new Reminder(reminderDto));
@@ -96,7 +86,7 @@ public class TaskService {
         taskDto.setCompletedTime(task.getCompletedTime());
         taskDto.setStatus(task.getStatus());
         
-        if (!task.getReminders().isEmpty()) {
+        if (!task.getReminders().isEmpty() && task.getReminders()!=null) {
         List<ReminderDto> remindersDto = new ArrayList<>();   
         for (Reminder reminder : task.getReminders()) {
             remindersDto.add(new ReminderDto(reminder));

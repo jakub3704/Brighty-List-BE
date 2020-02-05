@@ -18,4 +18,5 @@
         relativeToChangelogFile="true" />
     <include file="changes/changes_task_data.xml"
         relativeToChangelogFile="true" />  
+        
 </databaseChangeLog>
