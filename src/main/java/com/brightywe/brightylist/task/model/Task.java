@@ -11,7 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.brightywe.brightylist.reminder.model.Reminder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "tasks")
@@ -21,11 +22,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "taskId")
     private Long taskId;
-    
+
     @NotNull
     @Column(name = "userId")
     private Long userId;
-    
+
     @NotBlank
     @Size(min = 3, max = 255)
     @Column(name = "title")
@@ -40,25 +41,31 @@ public class Task {
     @NotNull
     @Column(name = "priority")
     private Integer priority;
-    
+
     @Column(name = "start_time")
     private LocalDateTime startTime;
-    
-    @Column(name = "end_time")    
+
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
     @Column(name = "completed_time")
     private LocalDateTime completedTime;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private TaskStatus status;
-    
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     private List<Reminder> reminders = new ArrayList<>();
-    
+
     public Task() {
     };
+
+    public void addReminder(Reminder reminder) {
+        reminder.setTask(this);
+        this.reminders.add(reminder);
+    }
 
     public Long getTaskId() {
         return taskId;
@@ -132,8 +139,4 @@ public class Task {
         return reminders;
     }
 
-    public void setReminders(List<Reminder> reminders) {
-        this.reminders = reminders;
-    }
-    
 }

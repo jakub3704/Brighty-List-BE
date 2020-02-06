@@ -12,24 +12,18 @@
             <column name="reminderId" autoIncrement="true"
                 type="BIGINT">
                 <constraints primaryKey="true"
-                    nullable="false" 
-                    foreignKeyName="fk_task_id"/>
+                    nullable="false" />
             </column>
             <column name="taskId" type="BIGINT">
-                <constraints nullable="false" />
+                <constraints nullable="false"
+                    foreignKeyName="fk_task_id"
+                    references="tasks(taskId)" />
             </column>
             <column name="message" type="VARCHAR(255)" />
             <column name="cron" type="VARCHAR(500)" />
+            <column name="next_execution_time" type="TIMESTAMP" />
+            <column name="status" type="TINYINT(1)" />
         </createTable>
-        
-            <addForeignKeyConstraint
-                baseColumnNames="taskId" 
-                baseTableName="reminders" 
-                constraintName="fk_task_id"
-                onDelete="CASCADE" 
-                onUpdate="CASCADE"
-                referencedColumnNames="taskId"
-                referencedTableName="tasks" />
 
         <rollback>
             <dropTable tableName="reminders" />

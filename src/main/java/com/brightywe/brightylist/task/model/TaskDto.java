@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.validation.constraints.*;
 
-import com.brightywe.brightylist.reminder.model.ReminderDto;
-
 public class TaskDto {
 
     private Long taskId;

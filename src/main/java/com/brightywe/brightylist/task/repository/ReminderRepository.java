@@ -1,10 +1,10 @@
-package com.brightywe.brightylist.reminder.repository;
+package com.brightywe.brightylist.task.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.brightywe.brightylist.reminder.model.Reminder;
+import com.brightywe.brightylist.task.model.Reminder;
 
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder, Long> {

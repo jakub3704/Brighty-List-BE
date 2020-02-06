@@ -1,18 +1,24 @@
-package com.brightywe.brightylist.reminder.model;
+package com.brightywe.brightylist.task.model;
+
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 
 public class ReminderDto {
-    
+
     private Long reminderId;
 
     private String message;
 
     @NotBlank
     private String cron;
-        
+
+    private LocalDateTime nextExecutionTime;
+
+    private Boolean status;
+
     public ReminderDto() {
-        
+
     }
 
     public ReminderDto(Reminder reminder) {
@@ -20,8 +26,10 @@ public class ReminderDto {
         this.reminderId = reminder.getReminderId();
         this.message = reminder.getMessage();
         this.cron = reminder.getCron();
+        this.nextExecutionTime = reminder.getNextExecutionTime();
+        this.status = reminder.getStatus();
     }
-    
+
     public Long getReminderId() {
         return reminderId;
     }
@@ -45,5 +53,21 @@ public class ReminderDto {
     public void setCron(String cron) {
         this.cron = cron;
     }
-    
+
+    public LocalDateTime getNextExecutionTime() {
+        return nextExecutionTime;
+    }
+
+    public void setNextExecutionTime(LocalDateTime nextExecutionTime) {
+        this.nextExecutionTime = nextExecutionTime;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
 }
