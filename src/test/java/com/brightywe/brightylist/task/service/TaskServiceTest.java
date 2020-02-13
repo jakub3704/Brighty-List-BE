@@ -40,7 +40,7 @@ public class TaskServiceTest {
 
         assertEquals("Title A", taskDto.getTitle());
         assertEquals("Notes A", taskDto.getNotes());
-        assertEquals(1, taskDto.getPriority());
+        assertEquals((Integer) 1, taskDto.getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), taskDto.getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), taskDto.getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), taskDto.getStartTime());
@@ -57,7 +57,7 @@ public class TaskServiceTest {
 
         assertEquals("Title A", task.getTitle());
         assertEquals("Notes A", task.getNotes());
-        assertEquals(1, task.getPriority());
+        assertEquals((Integer) 1, task.getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), task.getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), task.getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), task.getStartTime());
@@ -77,7 +77,7 @@ public class TaskServiceTest {
 
         assertEquals("Title A", taskDto.get(0).getTitle());
         assertEquals("Notes A", taskDto.get(0).getNotes());
-        assertEquals(1, taskDto.get(0).getPriority());
+        assertEquals((Integer) 1, taskDto.get(0).getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), taskDto.get(0).getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), taskDto.get(0).getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), taskDto.get(0).getStartTime());
@@ -85,7 +85,7 @@ public class TaskServiceTest {
 
         assertEquals("Title B", taskDto.get(1).getTitle());
         assertEquals("Notes B", taskDto.get(1).getNotes());
-        assertEquals(2, taskDto.get(1).getPriority());
+        assertEquals((Integer) 2, taskDto.get(1).getPriority());
         assertEquals(LocalDateTime.of(2019, 5, 6, 12, 15), taskDto.get(1).getDeadline());
         assertEquals(LocalDateTime.of(2019, 5, 1, 10, 45), taskDto.get(1).getReminder());
         assertEquals(LocalDateTime.of(2019, 1, 30, 9, 35), taskDto.get(1).getStartTime());
@@ -115,7 +115,7 @@ public class TaskServiceTest {
 
         assertEquals("Title A", taskDto.getTitle());
         assertEquals("Notes A", taskDto.getNotes());
-        assertEquals(1, task.getPriority());
+        assertEquals((Integer) 1, task.getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), task.getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), task.getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), task.getStartTime());
@@ -166,7 +166,7 @@ public class TaskServiceTest {
  
         assertEquals("Title A", taskDtoCreated.getTitle());
         assertEquals("Notes A", taskDtoCreated.getNotes());
-        assertEquals(1, taskDtoCreated.getPriority());
+        assertEquals((Integer) 1, taskDtoCreated.getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), taskDtoCreated.getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), taskDtoCreated.getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), taskDtoCreated.getStartTime());
@@ -188,7 +188,7 @@ public class TaskServiceTest {
         
         assertEquals("Title A", taskDtoCreated.getTitle());
         assertEquals("Notes A", taskDtoCreated.getNotes());
-        assertEquals(1, taskDtoCreated.getPriority());
+        assertEquals((Integer) 1, taskDtoCreated.getPriority());
         assertEquals(LocalDateTime.of(2020, 5, 6, 12, 15), taskDtoCreated.getDeadline());
         assertEquals(LocalDateTime.of(2020, 5, 1, 10, 45), taskDtoCreated.getReminder());
         assertEquals(LocalDateTime.of(2020, 1, 30, 9, 35), taskDtoCreated.getStartTime());

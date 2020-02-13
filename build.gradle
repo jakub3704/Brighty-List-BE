@@ -19,7 +19,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.liquibase:liquibase-core:3.8.2'
-	
+    implementation 'com.sendgrid:sendgrid-java:4.4.1'
+	   
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.0.RELEASE'
     	
