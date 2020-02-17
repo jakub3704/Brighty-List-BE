@@ -1,4 +1,4 @@
-package com.brightywe.brightylist.task.model;
+package com.brightywe.brightylist.task.model.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

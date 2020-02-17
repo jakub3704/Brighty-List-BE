@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.brightywe.brightylist.task.model.Task;
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.domain.Task;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.repository.TaskRepository;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -10,10 +10,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.brightywe.brightylist.task.model.Reminder;
-import com.brightywe.brightylist.task.model.ReminderDto;
-import com.brightywe.brightylist.task.model.Task;
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.domain.Reminder;
+import com.brightywe.brightylist.task.model.domain.Task;
+import com.brightywe.brightylist.task.model.dto.ReminderDto;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.repository.TaskRepository;
 
 @Service

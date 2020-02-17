@@ -19,7 +19,7 @@
                 type="VARCHAR(500)" />
             <column name="priority" value="1" type="INT" />
             <column name="status"
-                value="STATUS_ACTIVE_AUTOCOMPLETE" type="VARCHAR(500)" />
+                value="STATUS_OVERDUE" type="VARCHAR(500)" />
             <column name="start_time" value="2020:02:12T14:00:05"
                 type="TIMESTAMP" />
             <column name="end_time" value="2020:02:13T14:00:05"
@@ -54,7 +54,7 @@
                 type="VARCHAR(500)" />
             <column name="next_execution_time"
                 value="2020:02:12T15:00:15" type="TIMESTAMP" />
-            <column name="status" value="1" type="TINYINT" />
+            <column name="active" value="1" type="TINYINT" />
         </insert>
 
         <insert tableName="reminders">
@@ -67,7 +67,7 @@
                 type="VARCHAR(500)" />
             <column name="next_execution_time"
                 value="2020:02:12T15:00:05" type="TIMESTAMP" />
-            <column name="status" value="0" type="TINYINT" />
+            <column name="active" value="1" type="TINYINT" />
         </insert>
 
         <insert tableName="reminders">
@@ -80,7 +80,7 @@
                 type="VARCHAR(500)" />
             <column name="next_execution_time"
                 value="2020:02:12T15:00:35" type="TIMESTAMP" />
-            <column name="status" value="1" type="TINYINT" />
+            <column name="active" value="1" type="TINYINT" />
         </insert>
 
         <insert tableName="reminders">
@@ -93,7 +93,7 @@
                 type="VARCHAR(500)" />
             <column name="next_execution_time"
                 value="2020:02:12T14:00:05" type="TIMESTAMP" />
-            <column name="status" value="1" type="TINYINT" />
+            <column name="active" value="1" type="TINYINT" />
         </insert>
 
     </changeSet>

@@ -7,7 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.brightywe.brightylist.task.model.Task;
+import com.brightywe.brightylist.task.model.domain.Task;
 
 @Entity
 @Table(name = "users")

@@ -1,9 +1,11 @@
-package com.brightywe.brightylist.task.model;
+package com.brightywe.brightylist.task.model.domain;
 
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import com.brightywe.brightylist.task.model.dto.ReminderDto;
 
 @Entity
 @Table(name = "reminders")
@@ -20,12 +22,12 @@ public class Reminder {
     @NotBlank
     @Column(name = "cron")
     private String cron;
-
+    
     @Column(name = "next_execution_time")
     private LocalDateTime nextExecutionTime;
-
-    @Column(name = "status")
-    private Boolean status;
+    
+    @Column(name = "active")
+    private Boolean active;
 
     @ManyToOne
     @JoinColumn(name = "taskId")
@@ -40,7 +42,7 @@ public class Reminder {
         this.message = reminderDto.getMessage();
         this.cron = reminderDto.getCron();
         this.nextExecutionTime = reminderDto.getNextExecutionTime();
-        this.status = reminderDto.getStatus();
+        this.active = reminderDto.isActive();
     }
 
     public Reminder(Task task, ReminderDto reminderDto) {
@@ -49,7 +51,7 @@ public class Reminder {
         this.message = reminderDto.getMessage();
         this.cron = reminderDto.getCron();
         this.nextExecutionTime = reminderDto.getNextExecutionTime();
-        this.status = reminderDto.getStatus();
+        this.active = reminderDto.isActive();
         this.task = task;
     }
 
@@ -89,12 +91,18 @@ public class Reminder {
         this.nextExecutionTime = nextExecutionTime;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean isActive() {
+        return active;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "Reminder [reminderId=" + reminderId + ", message=" + message + ", cron=" + cron + ", nextExecutionTime="
+                + nextExecutionTime + ", active=" + active + "]";
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.service.TaskService;
 
 @RestController

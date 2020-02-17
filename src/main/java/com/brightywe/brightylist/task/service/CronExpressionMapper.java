@@ -1,4 +1,4 @@
-package com.brightywe.brightylist.cron;
+package com.brightywe.brightylist.task.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -9,15 +9,15 @@ import java.util.Locale;
 
 import org.springframework.scheduling.support.CronSequenceGenerator;
 
-public class CronExpressionDto {
+public class CronExpressionMapper {
 
     private final String cronExpression;
         
-    public CronExpressionDto(String cronExpression) {
+    public CronExpressionMapper(String cronExpression) {
         this.cronExpression = cronExpression;
     }
     
-    public CronExpressionDto(LocalDateTime localDateTime) {
+    public CronExpressionMapper(LocalDateTime localDateTime) {
         this.cronExpression = localDateTime.getSecond() + " "
                             + localDateTime.getMinute() + " "
                             + localDateTime.getHour() + " "
@@ -26,7 +26,7 @@ public class CronExpressionDto {
                             + "?";
     }
     
-    public CronExpressionDto(int seconds, int minutes, int hours, int dayOfMonth, int month, int dayInterval) {
+    public CronExpressionMapper(int seconds, int minutes, int hours, int dayOfMonth, int month, int dayInterval) {
         this.cronExpression = seconds + " "
                             + minutes + " "
                             + hours + " "
@@ -35,7 +35,7 @@ public class CronExpressionDto {
                             + "?";
     }
     
-    public CronExpressionDto(int seconds, int minutes, int hours, DayOfWeek[] daysOfWeek, int month) {
+    public CronExpressionMapper(int seconds, int minutes, int hours, DayOfWeek[] daysOfWeek, int month) {
         this.cronExpression = seconds + " "
                             + minutes + " "
                             + hours + " "

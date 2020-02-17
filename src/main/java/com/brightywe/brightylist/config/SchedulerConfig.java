@@ -1,4 +1,4 @@
-package com.brightywe.brightylist.scheduler;
+package com.brightywe.brightylist.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

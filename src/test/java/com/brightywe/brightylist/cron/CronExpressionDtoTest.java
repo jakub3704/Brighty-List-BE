@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import com.brightywe.brightylist.task.service.CronExpressionMapper;
+
 public class CronExpressionDtoTest {
 
     @Test
@@ -14,7 +16,7 @@ public class CronExpressionDtoTest {
         String cronExpressionInput = "0 0 12 ? 2 MON";
         LocalDateTime now = LocalDateTime.of(2020, 2, 17, 12, 55);
 
-        CronExpressionDto cronExpressionDto = new CronExpressionDto(cronExpressionInput);
+        CronExpressionMapper cronExpressionDto = new CronExpressionMapper(cronExpressionInput);
 
         LocalDateTime result = cronExpressionDto.nextExecutionDateTime(now);
 
@@ -25,7 +27,7 @@ public class CronExpressionDtoTest {
     public void testCronExpressionDtoB() {
         LocalDateTime now = LocalDateTime.of(2020, 2, 17, 12, 55);
 
-        CronExpressionDto cronExpressionDto = new CronExpressionDto(0, 0, 12, 18, 2, 5);
+        CronExpressionMapper cronExpressionDto = new CronExpressionMapper(0, 0, 12, 18, 2, 5);
 
         LocalDateTime result = cronExpressionDto.nextExecutionDateTime(now);
 
@@ -37,7 +39,7 @@ public class CronExpressionDtoTest {
         DayOfWeek[] days = { DayOfWeek.MONDAY, DayOfWeek.TUESDAY };
         LocalDateTime now = LocalDateTime.of(2020, 2, 18, 12, 55);
 
-        CronExpressionDto cronExpressionDto = new CronExpressionDto(0, 0, 12, days, 2);
+        CronExpressionMapper cronExpressionDto = new CronExpressionMapper(0, 0, 12, days, 2);
 
         LocalDateTime result = cronExpressionDto.nextExecutionDateTime(now);
 
@@ -50,9 +52,9 @@ public class CronExpressionDtoTest {
         String cronExpressionInputB = "0 0 12 ? 2 MON";
         String cronExpressionInputC = "0 0 12 ? 2 MON 2015";
         
-        CronExpressionDto cronExpressionDtoA = new CronExpressionDto(cronExpressionInputA);
-        CronExpressionDto cronExpressionDtoB = new CronExpressionDto(cronExpressionInputB);
-        CronExpressionDto cronExpressionDtoC = new CronExpressionDto(cronExpressionInputC);
+        CronExpressionMapper cronExpressionDtoA = new CronExpressionMapper(cronExpressionInputA);
+        CronExpressionMapper cronExpressionDtoB = new CronExpressionMapper(cronExpressionInputB);
+        CronExpressionMapper cronExpressionDtoC = new CronExpressionMapper(cronExpressionInputC);
         
         assertEquals(false, cronExpressionDtoA.isStructureValid());
         assertEquals(true, cronExpressionDtoB.isStructureValid());

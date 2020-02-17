@@ -20,9 +20,15 @@
                     references="tasks(taskId)" />
             </column>
             <column name="message" type="VARCHAR(255)" />
-            <column name="cron" type="VARCHAR(500)" />
-            <column name="next_execution_time" type="TIMESTAMP" />
-            <column name="status" type="TINYINT(1)" />
+            <column name="cron" type="VARCHAR(500)">
+                <constraints nullable="false" />
+            </column>
+            <column name="next_execution_time" type="TIMESTAMP">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="active" type="TINYINT(1)">
+                <constraints nullable="false" />
+            </column>
         </createTable>
 
         <rollback>

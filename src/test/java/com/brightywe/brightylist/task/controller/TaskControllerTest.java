@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.service.TaskService;
 
 @ExtendWith(MockitoExtension.class)

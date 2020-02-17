@@ -1,10 +1,12 @@
-package com.brightywe.brightylist.task.model;
+package com.brightywe.brightylist.task.model.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.*;
+
+import com.brightywe.brightylist.task.model.domain.TaskStatus;
 
 public class TaskDto {
 
