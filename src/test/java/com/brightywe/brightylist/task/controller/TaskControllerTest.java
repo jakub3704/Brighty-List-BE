@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.service.TaskService;
 
 @ExtendWith(MockitoExtension.class)
@@ -98,8 +98,7 @@ public class TaskControllerTest {
         taskDto.setTitle("Title A");
         taskDto.setNotes("Notes A");
         taskDto.setPriority(1);
-        taskDto.setDeadline(LocalDateTime.of(2020, 5, 6, 12, 15));
-        taskDto.setReminder(LocalDateTime.of(2020, 5, 1, 10, 45));
+        taskDto.setEndTime(LocalDateTime.of(2020, 5, 6, 12, 15));
         taskDto.setStartTime(LocalDateTime.of(2020, 1, 30, 9, 35));
         taskDto.setCompletedTime(LocalDateTime.of(2020, 5, 7, 11, 25));
         return taskDto;
@@ -110,8 +109,7 @@ public class TaskControllerTest {
         taskDto.setTitle("Title B");
         taskDto.setNotes("Notes B");
         taskDto.setPriority(2);
-        taskDto.setDeadline(LocalDateTime.of(2019, 5, 6, 12, 15));
-        taskDto.setReminder(LocalDateTime.of(2019, 5, 1, 10, 45));
+        taskDto.setEndTime(LocalDateTime.of(2019, 5, 6, 12, 15));
         taskDto.setStartTime(LocalDateTime.of(2019, 1, 30, 9, 35));
         taskDto.setCompletedTime(LocalDateTime.of(2019, 5, 7, 11, 25));
         return taskDto;

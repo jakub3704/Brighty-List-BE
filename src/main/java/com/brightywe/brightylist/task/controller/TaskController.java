@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brightywe.brightylist.task.model.TaskDto;
+import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.service.TaskService;
 
 @RestController
@@ -37,17 +37,18 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto createTask(@Valid @RequestBody TaskDto task) {
-        return taskService.createTask(task);
+    public TaskDto createTask(@Valid @RequestBody TaskDto taskDto) {
+        return taskService.createTask(taskDto);
     }
 
     @PutMapping("/{taskId}")
-    public TaskDto updateTask(@PathVariable(value = "taskId") Long taskId, @Valid @RequestBody TaskDto task) {
-        return taskService.updateTask(taskId, task);
+    public TaskDto updateTask(@PathVariable(value = "taskId") Long taskId, @Valid @RequestBody TaskDto taskDto) {
+        return taskService.updateTask(taskId, taskDto);
     }
 
     @DeleteMapping("/{taskId}")
     public boolean deleteTask(@PathVariable(value = "taskId") Long taskId) {
         return taskService.deleteTask(taskId);
     }
+    
 }

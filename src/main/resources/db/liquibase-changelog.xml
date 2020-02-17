@@ -12,6 +12,11 @@
         relativeToChangelogFile="true" />
     <include file="changes/changes_base_users.xml"
         relativeToChangelogFile="true" />
-
-
+    <include file="changes/changes_tasks_r1.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_reminders.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_task_data.xml"
+        relativeToChangelogFile="true" />  
+        
 </databaseChangeLog>
