@@ -1,3 +1,18 @@
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 package com.brightywe.brightylist.task.model.domain;
 
 import java.time.LocalDateTime;
@@ -42,18 +57,24 @@ public class Task {
     @Column(name = "priority")
     private Integer priority;
 
+    @NotNull
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
+    @NotNull
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
     @Column(name = "completed_time")
     private LocalDateTime completedTime;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private TaskStatus status;
+    @NotNull
+    @Column(name = "autocomplete")
+    private Boolean autocomplete;
+
+    @NotNull
+    @Column(name = "completed")
+    private Boolean completed;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -66,7 +87,9 @@ public class Task {
         reminder.setTask(this);
         this.reminders.add(reminder);
     }
-
+    public Reminder getReminder(int index) {
+        return this.reminders.get(index);
+    }
     public Long getTaskId() {
         return taskId;
     }
@@ -127,16 +150,28 @@ public class Task {
         this.endTime = endTime;
     }
 
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
     public List<Reminder> getReminders() {
         return reminders;
+    }
+
+    public void deleteReminder(Reminder reminder) {
+        reminders.remove(reminder);
+    }
+
+    public boolean isAutocomplete() {
+        return autocomplete;
+    }
+
+    public void setAutocomplete(boolean isAutocomplete) {
+        this.autocomplete = isAutocomplete;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        this.completed = isCompleted;
     }
 
 }

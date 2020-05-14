@@ -1,3 +1,18 @@
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 package com.brightywe.brightylist.task.service;
 
 import java.time.DayOfWeek;
@@ -24,6 +39,24 @@ public class CronExpressionMapper {
                             + localDateTime.getDayOfMonth() + " "
                             + localDateTime.getMonthValue() + " "
                             + "?";
+    }
+    
+    public CronExpressionMapper(LocalDateTime localDateTime, boolean isReapet, Long ratio) {
+        if (isReapet) {
+            this.cronExpression = localDateTime.getSecond() + " "
+                    + localDateTime.getMinute() + " "
+                    + localDateTime.getHour() + " "
+                    + localDateTime.getDayOfMonth() + "/" + ratio.toString() + " "
+                    + localDateTime.getMonthValue() + "/1 "
+                    + "?";
+        } else {
+            this.cronExpression = localDateTime.getSecond() + " "
+                    + localDateTime.getMinute() + " "
+                    + localDateTime.getHour() + " "
+                    + localDateTime.getDayOfMonth() + " "
+                    + localDateTime.getMonthValue() + " "
+                    + "?";
+        }
     }
     
     public CronExpressionMapper(int seconds, int minutes, int hours, int dayOfMonth, int month, int dayInterval) {
@@ -78,6 +111,11 @@ public class CronExpressionMapper {
             daysOdWeekCron.append(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + ",");       
         }
         return daysOdWeekCron.substring(0, (daysOdWeekCron.length()-1));
+    }
+
+    @Override
+    public String toString() {
+        return cronExpression;
     }
     
 }

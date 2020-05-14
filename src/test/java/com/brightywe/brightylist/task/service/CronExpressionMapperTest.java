@@ -1,4 +1,4 @@
-package com.brightywe.brightylist.cron;
+package com.brightywe.brightylist.task.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.brightywe.brightylist.task.service.CronExpressionMapper;
 
-public class CronExpressionDtoTest {
+public class CronExpressionMapperTest {
 
     @Test
     public void testCronExpressionDtoA() {

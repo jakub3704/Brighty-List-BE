@@ -1,3 +1,18 @@
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 package com.brightywe.brightylist.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +24,12 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableAuthorizationServer
@@ -24,7 +43,7 @@ public class BrightyAuthorizationServerConfig extends AuthorizationServerConfigu
     private static final String SCOPE_READ = "read";
     private static final String SCOPE_WRITE = "write";
     private static final String TRUST = "trust";
-    private static final int ACCESS_TOKEN_VALIDITY = 3600;
+    private static final int ACCESS_TOKEN_VALIDITY = 20;//3600;
     private static final int REFRESH_TOKEN_VALIDITY = 259200;
 
     @Autowired
@@ -51,8 +70,21 @@ public class BrightyAuthorizationServerConfig extends AuthorizationServerConfigu
     }
 
     @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) {
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.applyPermitDefaultValues();
+
+        source.registerCorsConfiguration("/oauth/token", config);
+        CorsFilter filter = new CorsFilter(source);
+        security.addTokenEndpointAuthenticationFilter(filter);
+    }
+    
+    @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
                 .authenticationManager(authManager);
     }
+        
 }

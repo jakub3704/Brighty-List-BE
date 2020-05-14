@@ -12,11 +12,19 @@
         relativeToChangelogFile="true" />
     <include file="changes/changes_base_users.xml"
         relativeToChangelogFile="true" />
-    <include file="changes/changes_tasks_r1.xml"
+    <include file="changes/changes_tasks_v1.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_tasks_v2.xml"
         relativeToChangelogFile="true" />
     <include file="changes/changes_reminders.xml"
         relativeToChangelogFile="true" />
-    <include file="changes/changes_task_data.xml"
-        relativeToChangelogFile="true" />  
-        
+    <include file="changes/changes_email_queue.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_overdue_email_queue.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_email_daily_count.xml"
+        relativeToChangelogFile="true" />
+    <include file="changes/changes_password_reset_token.xml"
+        relativeToChangelogFile="true" />
+
 </databaseChangeLog>

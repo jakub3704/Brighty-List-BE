@@ -1,70 +1,91 @@
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 package com.brightywe.brightylist.user.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.brightywe.brightylist.user.model.UserDto;
+import com.brightywe.brightylist.exceptions.ResourceNotFoundException;
+import com.brightywe.brightylist.user.model.dto.PasswordChange;
+import com.brightywe.brightylist.user.model.dto.UserDto;
 import com.brightywe.brightylist.user.service.UserService;
 
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
+@RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-
+    
     @Autowired
     private UserService userService;
-
-    @PreAuthorize("permitAll()")
-    @GetMapping("/signup")
-    public String info() {
-        return "SignUp";
+      
+    @GetMapping("/details")
+    public UserDto getUserDetails() {
+        try {
+        return userService.getUserDetails();
+        } catch (ResourceNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
     
-    @PreAuthorize("permitAll()")
-    @PostMapping("/signup")
-    public UserDto createUserWithBasicAuthority(@Valid @RequestBody UserDto userDto) {
-        return userService.createUserWithBasicAuthority(userDto);
+    @PutMapping("/name")
+    public UserDto updateUserName(@RequestBody String name) {
+        try {
+            return userService.updateUserName(name);
+        } catch (ResourceNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+        }
     }
     
-    @GetMapping("/users")
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
-    }
-    
-    @GetMapping("/users/{userId}")
-    public UserDto getUserById(@PathVariable(value = "userId") Long userId) {
-        return userService.getUserById(userId);
-    }
-    
-    @GetMapping("/users/username/{userName}")
-    public UserDto getUserByName(@PathVariable(value = "userName") String userName) {
-        return userService.getUserByName(userName);
+    @PutMapping("/email")
+    public UserDto updateUserEmail(@RequestBody String email) {
+        try {
+            return userService.updateUserEmail(email);
+        } catch (ResourceNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+        }
     }
 
-    @PostMapping("/users")
-    public UserDto createUser(@Valid @RequestBody UserDto userDto) {
-        return userService.createUser(userDto);
+    @PutMapping("/password")
+    public UserDto updateUserPassword(@RequestBody PasswordChange password) {
+        try {
+            return userService.updateUserPassword(password.getPasswordOld(), password.getPasswordNew());
+        } catch (ResourceNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+        }
     }
 
-    @PutMapping("/users/{userId}")
-    public UserDto updateUser(@PathVariable(value = "userId") Long userId, @Valid @RequestBody UserDto userDto) {
-        return userService.updateUser(userId, userDto);
+    @PostMapping("/delete")
+    public boolean deleteUserAccount(@RequestBody String password) {
+        try {
+            return userService.deleteUserAccount(password);
+        } catch (ResourceNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+        }
     }
-
-    @DeleteMapping("/users/{userId}")
-    public boolean deleteUser(@PathVariable(value = "userId") Long userId) {
-        return userService.deleteUser(userId);
-    }
-   
+      
 }
+
+

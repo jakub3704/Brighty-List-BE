@@ -24,7 +24,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="next_execution_time" type="TIMESTAMP">
-                <constraints nullable="false" unique="true" />
+                <constraints nullable="false"/>
             </column>
             <column name="active" type="TINYINT(1)">
                 <constraints nullable="false" />

@@ -1,13 +1,26 @@
-package com.brightywe.brightylist.user.model;
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
 
-import java.util.List;
+package com.brightywe.brightylist.user.model.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.brightywe.brightylist.task.model.domain.Task;
+import com.brightywe.brightylist.user.model.Role;
 
 @Entity
 @Table(name = "users")
@@ -31,9 +44,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToMany
-    private List<Task> tasks;
     
     public String getName() {
         return name;
@@ -43,11 +53,11 @@ public class User {
         this.name = name;
     }
 
-    public String getMail() {
+    public String getEmail() {
         return eMail;
     }
 
-    public void setMail(String eMail) {
+    public void setEmail(String eMail) {
         this.eMail = eMail;
     }
 
@@ -77,14 +87,6 @@ public class User {
 
     public void seteMail(String eMail) {
         this.eMail = eMail;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     @Override

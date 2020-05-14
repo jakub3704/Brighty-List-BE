@@ -1,39 +1,43 @@
+/****************************************************************************
+ * Copyright 2020 Jakub Koczur
+ *
+ * Unauthorized copying of this project, via any medium is strictly prohibited.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES  
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
 package com.brightywe.brightylist.security;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.brightywe.brightylist.user.model.UserDto;
-import com.brightywe.brightylist.user.model.UserLogInProperties;
-import com.brightywe.brightylist.user.service.UserService;
+import com.brightywe.brightylist.exceptions.ResourceNotFoundException;
+import com.brightywe.brightylist.user.model.domain.User;
+import com.brightywe.brightylist.user.repository.UserRepository;
 
 @Service
 public class BrightySecurityUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserService userService;
-        
+    private UserRepository userRepository;
+            
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserLogInProperties user = mapToUserLogInProperties(userService.getUserByName(username));
-        if(user == null){
-            throw new UsernameNotFoundException("UserName "+ username +" not found");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), Arrays.asList(user.getAuthority()));
+            User user = userRepository.findByName(username)
+                    .orElseThrow(() -> new ResourceNotFoundException("User", "Name", username));
+            if (user==null) {
+                throw new UsernameNotFoundException("UserName "+ username +" not found");
+            }
+            return new CustomUserDetails(user);
     }
-
-    public UserLogInProperties mapToUserLogInProperties(UserDto userDto) {
-        UserLogInProperties user = new UserLogInProperties();
-        user.setUserName(userDto.getName());
-        user.setPassword(userDto.getPassword()); 
-        user.setAuthority(new SimpleGrantedAuthority(userDto.getRole().name()));
-        return user;
-    }
-    
+      
 }

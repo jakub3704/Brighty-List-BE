@@ -3,7 +3,6 @@ package com.brightywe.brightylist.task.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,92 +25,67 @@ public class TaskControllerTest {
     private TaskService taskService;
 
     @Test
-    public void testGetAllTasks() {
-        List<TaskDto> taskDto = new ArrayList<>();
-        taskDto.add(setTaskDtoA());
-        taskDto.add(setTaskDtoB());
+    public void getAllTasksTest() {
+        List<TaskDto> tasksDto = new ArrayList<>();
+        TaskDto taskDtoA = new TaskDto();
+        TaskDto taskDtoB = new TaskDto();
+        tasksDto.add(taskDtoA);
+        tasksDto.add(taskDtoB);
 
-        when(taskService.getAllTasks()).thenReturn(taskDto);
+        when(taskService.getAllTasksByUser()).thenReturn(tasksDto);
 
-        List<TaskDto> taskDtoReturned = taskController.getAllTasks();
+        List<TaskDto> result = taskController.getAllTasks();
 
-        assertEquals("Title A", taskDtoReturned.get(0).getTitle());
-        assertEquals("Notes A", taskDtoReturned.get(0).getNotes());
-
-        assertEquals("Title B", taskDtoReturned.get(1).getTitle());
-        assertEquals("Notes B", taskDtoReturned.get(1).getNotes());
+        assertEquals(taskDtoA, result.get(0));
+        assertEquals(taskDtoB, result.get(1));
     }
 
     @Test
-    public void testGetTaskById() {
+    public void getTaskByIdAndUserIdTest() {
         Long taskId = 1L;
         TaskDto taskDto = new TaskDto();
-        taskDto = setTaskDtoA();
 
-        when(taskService.getTaskById(taskId)).thenReturn(taskDto);
 
-        TaskDto taskDtoResult = taskController.getTaskById(taskId);
+        when(taskService.getTaskByIdAndUser(taskId)).thenReturn(taskDto);
 
-        assertEquals("Title A", taskDtoResult.getTitle());
-        assertEquals("Notes A", taskDtoResult.getNotes());
+        TaskDto result = taskController.getTaskByIdAndUserId(taskId);
+
+        assertEquals(taskDto, result);
     }
 
     @Test
-    public void testCreateTask() {
+    public void createTaskTest() {
         TaskDto taskDto = new TaskDto();
         TaskDto resultDto = new TaskDto();
 
-        when(taskService.createTask(taskDto)).thenReturn(resultDto);
+        when(taskService.createTaskByUser(taskDto)).thenReturn(resultDto);
 
-        TaskDto taskDtoResult = taskController.createTask(taskDto);
+        TaskDto result = taskController.createTask(taskDto);
 
-        assertEquals(resultDto, taskDtoResult);
+        assertEquals(resultDto, result);
     }
 
     @Test
     public void testUpdateTask() {
         Long taskId = 1L;
         TaskDto taskDto = new TaskDto();
-        taskDto = setTaskDtoA();
 
-        when(taskService.updateTask(taskId, taskDto)).thenReturn(taskDto);
+        when(taskService.updateTaskByUser(taskId, taskDto)).thenReturn(taskDto);
 
-        TaskDto taskDtoResult = taskController.updateTask(taskId, taskDto);
+        TaskDto result = taskController.updateTask(taskId, taskDto);
 
-        assertEquals("Title A", taskDtoResult.getTitle());
-        assertEquals("Notes A", taskDtoResult.getNotes());
+        assertEquals(taskDto, result);
     }
 
     @Test
     public void testDeleteTask() {
         Long taskId = 1L;
 
-        when(taskService.deleteTask(taskId)).thenReturn(true);
+        when(taskService.deleteTaskByUser(taskId)).thenReturn(true);
 
         boolean result = taskController.deleteTask(taskId);
 
         assertEquals(true, result);
     }
 
-    private TaskDto setTaskDtoA() {
-        TaskDto taskDto = new TaskDto();
-        taskDto.setTitle("Title A");
-        taskDto.setNotes("Notes A");
-        taskDto.setPriority(1);
-        taskDto.setEndTime(LocalDateTime.of(2020, 5, 6, 12, 15));
-        taskDto.setStartTime(LocalDateTime.of(2020, 1, 30, 9, 35));
-        taskDto.setCompletedTime(LocalDateTime.of(2020, 5, 7, 11, 25));
-        return taskDto;
-    }
-
-    private TaskDto setTaskDtoB() {
-        TaskDto taskDto = new TaskDto();
-        taskDto.setTitle("Title B");
-        taskDto.setNotes("Notes B");
-        taskDto.setPriority(2);
-        taskDto.setEndTime(LocalDateTime.of(2019, 5, 6, 12, 15));
-        taskDto.setStartTime(LocalDateTime.of(2019, 1, 30, 9, 35));
-        taskDto.setCompletedTime(LocalDateTime.of(2019, 5, 7, 11, 25));
-        return taskDto;
-    }
 }
