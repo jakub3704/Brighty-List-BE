@@ -17,23 +17,23 @@ App is running on http://localhost:7070/
 
 # Introduction
 ```
-Bright list is a project that alows users to create list of their task and 
-set reminders for those task. 
-User can mark task for autocompletition on end date time or manual completion.
+Bright list is a project that allows users to create list of their task and
+set reminders for those task.
+User can mark task for auto completion on end date time or manual completion.
 
-Reminders for tasks are send as simple e-Mails via SendGrid.
+Reminders for tasks are send as simple eMails via SendGrid.
 
-Additionaly users get e-mails when their tasks are overdue (when manual completition is selected).
+Additionally users get eMails when their tasks are overdue (when manual completion is selected).
 ```
 # Implemented Functionality
 ```
 1. OAuth2 security,
 2. Signing up new users,
-3. Updating user informations such as: nickname, e-Mail adress, password,
+3. Updating user informations such as: nickname, e-Mail address, password,
 4. Deleting account,
 5. Reseting user password, sending password reset link to user,
 6. User can create/delete/update tasks and reminders for those tasks,
-7. Service for sending e-mail with reminders, and overdue tasks to user,
+7. Service for sending eMail with reminders, and overdue tasks to user,
 8. User, Task, Reminders and other informations are stored in MySql database,
 9. Scheduled redefinition of exemplary data every 7 days on sundays 12:00 UTC.
 ```
