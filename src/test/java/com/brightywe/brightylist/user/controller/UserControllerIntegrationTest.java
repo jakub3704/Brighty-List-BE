@@ -1,6 +1,5 @@
 package com.brightywe.brightylist.user.controller;
 
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,44 +32,47 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles("test")
 @WebAppConfiguration
 @SpringBootTest
-public class UserControllerTest {
-    
+public class UserControllerIntegrationTest {
+
     private User userDb;
-    
+
     @Autowired
     private MockMvc mvc;
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     AuthenticationDetailsContext authenticationDetailsContext;
-    
+
     @Autowired
-    private PasswordEncoder passwordEncoder; 
-    
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private ObjectMapper mapper;
-    
+
     @AfterEach
-    public void tearDown() {
-        this.userDb = userRepository.findById(userDb.getId()).orElse(null);
-        userRepository.delete(userDb);
+    public void tearDown() { 
+        if (userDb!=null) {
+            this.userDb = userRepository.findById(userDb.getId()).orElse(null);
+            userRepository.delete(userDb);
+        }
+        this.userDb=null;
     }
 
     @Test
     public void getUserDetailsTest() throws Exception {
         String randomUUID = UUID.randomUUID().toString();
-        
+
         User user = new User();
         user.setName(randomUUID.substring(0, Math.min(randomUUID.length(), 20)));
         user.setEmail(randomUUID.substring(0, Math.min(randomUUID.length(), 5)) + "@user.com");
         String userPassword = randomUUID.substring(0, Math.min(randomUUID.length(), 5));
         user.setPassword(passwordEncoder.encode(userPassword));
         user.setRole(Role.ROLE_USER);
-        
+
         this.userDb = userRepository.save(user);
-        
+
         MockAccessTokenService mockAccessTokenService = new MockAccessTokenService();
         String accessToken = mockAccessTokenService.obtainAccessToken(user.getName(), userPassword, mvc);
 
@@ -79,49 +81,41 @@ public class UserControllerTest {
 
         result.andExpect(status().isOk());
 
-        result.andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.email", is(user.getEmail())));
-        
-        //User userDatabase = userRepository.findByName(user.getName()).orElse(null);
-        //userRepository.delete(userDatabase);
+        result.andExpect(jsonPath("$.name", is(user.getName()))).andExpect(jsonPath("$.email", is(user.getEmail())));
     }
-    
+
     @Test
     public void updateUserPasswordTest() throws Exception {
         String randomUUID = UUID.randomUUID().toString();
-        
+
         User user = new User();
         user.setName(randomUUID.substring(0, Math.min(randomUUID.length(), 20)));
         user.setEmail(randomUUID.substring(0, Math.min(randomUUID.length(), 5)) + "@user.com");
         String userPassword = randomUUID.substring(0, Math.min(randomUUID.length(), 5));
         user.setPassword(passwordEncoder.encode(userPassword));
         user.setRole(Role.ROLE_USER);
-        
-        userRepository.save(user);
-        
+
+        this.userDb = userRepository.save(user);
+
         PasswordChange newPassword = new PasswordChange();
         newPassword.setPasswordNew("NewPassword");
-        newPassword.setPasswordOld(userPassword);;
+        newPassword.setPasswordOld(userPassword);
+        ;
 
         MockAccessTokenService mockAccessTokenService = new MockAccessTokenService();
         String accessToken = mockAccessTokenService.obtainAccessToken(user.getName(), userPassword, mvc);
 
         ResultActions result = mvc
-                .perform(MockMvcRequestBuilders.put("/users/password")
-                        .header("Authorization", "Bearer " + accessToken)
+                .perform(MockMvcRequestBuilders.put("/users/password").header("Authorization", "Bearer " + accessToken)
                         .header("Content-Type", "application/json;charset=UTF-8")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(newPassword)));
+                        .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(newPassword)));
 
         result.andExpect(status().isOk());
 
-        result.andExpect(jsonPath("$.name", is(user.getName())))
-              .andExpect(jsonPath("$.email", is(user.getEmail())));
-                
+        result.andExpect(jsonPath("$.name", is(user.getName()))).andExpect(jsonPath("$.email", is(user.getEmail())));
+
         User userDatabase = userRepository.findByName(user.getName()).orElse(null);
-        
+
         assertEquals(true, passwordEncoder.matches(newPassword.getPasswordNew(), userDatabase.getPassword()));
-        
-        //userRepository.delete(userDatabase);
     }
 }

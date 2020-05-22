@@ -26,6 +26,10 @@ import com.brightywe.brightylist.user.model.domain.User;
 import com.brightywe.brightylist.user.model.dto.SignUpUserDto;
 import com.brightywe.brightylist.user.repository.UserRepository;
 
+/**
+ *Class SignUpService as service of API for signing up of ne users.
+ *
+ */
 @Service
 public class SignUpService {
     
@@ -35,8 +39,15 @@ public class SignUpService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    public void signUpUser(@Valid SignUpUserDto signUpUserDto) {
-        userRepository.save(mapToNewUser(signUpUserDto));
+    public boolean signUpUser(@Valid SignUpUserDto signUpUserDto) {
+        if (userRepository.count() >= 6) {
+            return false;
+        } else if (userRepository.count() <6) {
+            userRepository.save(mapToNewUser(signUpUserDto));
+            return true;
+        } else {
+            throw new RuntimeException();
+        }
     }
     
     User mapToNewUser(SignUpUserDto userDto) {

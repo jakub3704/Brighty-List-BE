@@ -28,6 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.brightywe.brightylist.user.service.PasswordResetTokenService;
 
+/**
+ *Class PasswordResetTokenController as RestController of API for comunication with Front End.
+ *
+ */
 @RestController
 @PreAuthorize("permitAll()")
 @RequestMapping("/reset")

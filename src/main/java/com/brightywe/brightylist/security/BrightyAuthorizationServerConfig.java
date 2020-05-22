@@ -31,6 +31,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * Class BrightyAuthorizationServerConfig for configuration of AuthorizationServer.
+ */
 @Configuration
 @EnableAuthorizationServer
 public class BrightyAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -43,8 +46,8 @@ public class BrightyAuthorizationServerConfig extends AuthorizationServerConfigu
     private static final String SCOPE_READ = "read";
     private static final String SCOPE_WRITE = "write";
     private static final String TRUST = "trust";
-    private static final int ACCESS_TOKEN_VALIDITY = 20;//3600;
-    private static final int REFRESH_TOKEN_VALIDITY = 259200;
+    private static final int ACCESS_TOKEN_VALIDITY = 10*60;
+    private static final int REFRESH_TOKEN_VALIDITY = 4*60*60;
 
     @Autowired
     private AuthenticationManager authManager;

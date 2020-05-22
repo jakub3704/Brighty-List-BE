@@ -24,42 +24,35 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Class BrightyResourceServerConfig for configuration of OAuth2 http client
+ * security.
+ */
 @Configuration
 @EnableResourceServer
 public class BrightyResourceServerConfig extends ResourceServerConfigurerAdapter {
-    
+
     @Override
-    public void configure(HttpSecurity http) throws Exception {       
+    public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/").permitAll()
-            .antMatchers("/signup").permitAll()
-            .antMatchers("/reset").permitAll()
-            .antMatchers("/oauth/token").permitAll()
-         .and()
-            .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
-        
-        http.cors()
-        .and()
-            .csrf().disable();
-        
+        .antMatchers("/").permitAll()
+        .antMatchers("/signup").permitAll()
+        .antMatchers("/reset").permitAll()
+        .antMatchers("/oauth/token").permitAll()
+        .and().exceptionHandling()
+                .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
+        http.cors().and().csrf().disable();
+
         super.configure(http);
     }
-    
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200");
-                registry.addMapping("/**/**").allowedMethods("GET, PUT, POST, DELETE")
-                .allowedOrigins("http://localhost:4200");
-                registry.addMapping("/**/**/**")
-                .allowedOrigins("http://localhost:4200");
-                registry.addMapping("/oauth/token")
-                .allowedOrigins("http://localhost:4200");
-                registry.addMapping("/reset")
-                .allowedOrigins("http://localhost:4200");
+                registry.addMapping("/oauth/token").allowedOrigins("http://localhost:4200");
             }
         };
     }

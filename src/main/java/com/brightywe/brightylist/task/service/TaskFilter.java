@@ -15,28 +15,32 @@
 
 package com.brightywe.brightylist.task.service;
 
+/**
+ * Enum TaskFilter options for comunication with FrontEnd, filtering od data.
+ *
+ */
 public enum TaskFilter {
-    DEFAULT("default", "default"),
-    BY_PRIORITY_HIGH("priority", "1"),
+    DEFAULT("default", "default"), 
+    BY_PRIORITY_HIGH("priority", "1"), 
     BY_PRIORITY_MEDIUM("priority", "2"),
-    BY_PRIORITY_LOW("priority", "3"),
+    BY_PRIORITY_LOW("priority", "3"), 
     STATUS_PENDING("status", "STATUS_PENDING"),
-    STATUS_ACTIVE("status", "STATUS_ACTIVE"),
+    STATUS_ACTIVE("status", "STATUS_ACTIVE"), 
     STATUS_COMPLETED("status", "STATUS_COMPLETED"),
     STATUS_OVERDUE("status", "STATUS_OVERDUE");
-    
+
     public final String key;
     public final String data;
-    
+
     private TaskFilter(String key, String data) {
         this.key = key;
         this.data = data;
     }
-    
+
     public String getKey() {
         return this.key;
     }
-    
+
     public String getData() {
         return this.data;
     }

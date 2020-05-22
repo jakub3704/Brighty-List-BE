@@ -63,19 +63,19 @@ public class EmailSendingService {
     private EmailDailyCount emailDailyCount;
 
     @Autowired
-    EmailDailyCountRepository emailDailyCountRepository;
+    private EmailDailyCountRepository emailDailyCountRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    EmailQueueRepository emailQueueRepository;
+    private EmailQueueRepository emailQueueRepository;
 
     @Autowired
-    OverdueEmailQueueRepository overdueEmailQueueRepository;
+    private OverdueEmailQueueRepository overdueEmailQueueRepository;
 
     @Autowired
-    SendGrid sendGrid;
+    private SendGrid sendGrid;
 
     /**
      * Sends all e-Mail stored in email_queue database table, with respect to

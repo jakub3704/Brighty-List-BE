@@ -24,6 +24,9 @@ import com.brightywe.brightylist.exceptions.ResourceNotFoundException;
 import com.brightywe.brightylist.user.model.domain.User;
 import com.brightywe.brightylist.user.repository.UserRepository;
 
+/**
+ * Class BrightySecurityUserDetailsService for mapping user entity and CustomUserDetails for web security.
+ */
 @Service
 public class BrightySecurityUserDetailsService implements UserDetailsService {
 

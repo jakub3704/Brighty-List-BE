@@ -29,6 +29,10 @@ import com.brightywe.brightylist.user.model.domain.User;
 import com.brightywe.brightylist.user.model.dto.UserDto;
 import com.brightywe.brightylist.user.repository.UserRepository;
 
+/**
+ *Class UserService as service of API for User related actions.
+ *
+ */
 @Service
 public class UserService {
 

@@ -28,6 +28,10 @@ import com.brightywe.brightylist.task.model.dto.ReminderDto;
 import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.repository.TaskRepository;
 
+/**
+ *Class TaskReminderMapper mapping between Task class and TaskDto class.
+ *
+ */
 @Component
 public class TaskReminderMapper {
     
@@ -116,6 +120,15 @@ public class TaskReminderMapper {
             for (Reminder reminder : task.getReminders()) {
                 remindersDto.add(new ReminderDto(reminder));
             }
+            remindersDto.sort( (ReminderDto a, ReminderDto  b) -> {
+                if (a.getNextExecutionTime().isBefore(b.getNextExecutionTime())) {
+                    return -1;
+                } 
+                if (a.getNextExecutionTime().isAfter(b.getNextExecutionTime())) {
+                    return 1;
+                }
+                return 0;
+            });
             taskDto.setReminders(remindersDto);
         }
         return taskDto;

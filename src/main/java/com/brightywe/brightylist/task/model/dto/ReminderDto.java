@@ -21,6 +21,9 @@ import javax.validation.constraints.NotBlank;
 
 import com.brightywe.brightylist.task.model.domain.Reminder;
 
+/**
+ * Class ReminderDto as data transfer object.
+ */
 public class ReminderDto {
     
     private Long taskId;

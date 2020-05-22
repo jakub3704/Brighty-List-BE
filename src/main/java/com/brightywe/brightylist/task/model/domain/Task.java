@@ -29,6 +29,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+/**
+ * Class Task as database entity for storing user tasks.
+ */
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -81,15 +84,17 @@ public class Task {
     private List<Reminder> reminders = new ArrayList<>();
 
     public Task() {
-    };
+    }
 
     public void addReminder(Reminder reminder) {
         reminder.setTask(this);
         this.reminders.add(reminder);
     }
+    
     public Reminder getReminder(int index) {
         return this.reminders.get(index);
     }
+    
     public Long getTaskId() {
         return taskId;
     }

@@ -24,6 +24,10 @@ import java.util.Locale;
 
 import org.springframework.scheduling.support.CronSequenceGenerator;
 
+/**
+ *Class CronExpressionMapper for storing, creating simple cron expression.
+ *
+ */
 public class CronExpressionMapper {
 
     private final String cronExpression;

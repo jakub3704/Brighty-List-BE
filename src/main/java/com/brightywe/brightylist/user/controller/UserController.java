@@ -32,6 +32,10 @@ import com.brightywe.brightylist.user.model.dto.PasswordChange;
 import com.brightywe.brightylist.user.model.dto.UserDto;
 import com.brightywe.brightylist.user.service.UserService;
 
+/**
+ *Class UserController as RestController of API for comunication with Front End.
+ *
+ */
 @RestController
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
 @RequestMapping("/users")

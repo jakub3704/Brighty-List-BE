@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,8 +29,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles("test")
 @WebAppConfiguration
 @SpringBootTest
-public class SingUpControllerTest {
-
+public class SingUpControllerIntegrationTest {
+    
+    private User userDb;
+    
     @Autowired
     private MockMvc mvc;
     
@@ -43,8 +46,18 @@ public class SingUpControllerTest {
     private PasswordEncoder passwordEncoder; 
     
     @Autowired
+    
     private ObjectMapper mapper;
-
+        
+    @AfterEach
+    public void tearDown() { 
+        if (userDb!=null) {
+            this.userDb = userRepository.findById(userDb.getId()).orElse(null);
+            userRepository.delete(userDb);
+        }
+        this.userDb=null;
+    }
+    
     @Test
     public void signUpUserTest() throws Exception {
         String randomUUID = UUID.randomUUID().toString();
@@ -62,12 +75,11 @@ public class SingUpControllerTest {
         
         result.andExpect(status().isOk());       
         
-        User userDatabase = userRepository.findByName(newUser.getName()).orElse(null);
-        userRepository.delete(userDatabase);
+        this.userDb = userRepository.findByName(newUser.getName()).orElse(null);
 
-        assertEquals(newUser.getName(), userDatabase.getName());
-        assertEquals(newUser.getEmail(), userDatabase.getEmail());
-        assertEquals(true, passwordEncoder.matches(newUser.getPassword(), userDatabase.getPassword()));
-        assertEquals(Role.ROLE_USER, userDatabase.getRole());       
+        assertEquals(newUser.getName(), userDb.getName());
+        assertEquals(newUser.getEmail(), userDb.getEmail());
+        assertEquals(true, passwordEncoder.matches(newUser.getPassword(), userDb.getPassword()));
+        assertEquals(Role.ROLE_USER, userDb.getRole());       
     }
 }

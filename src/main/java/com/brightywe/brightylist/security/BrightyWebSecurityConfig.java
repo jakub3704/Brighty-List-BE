@@ -26,6 +26,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Class BrightyWebSecurityConfig for configuration of AuthorizationServer.
+ */
 @Configuration
 @EnableWebSecurity
 public class BrightyWebSecurityConfig extends WebSecurityConfigurerAdapter {

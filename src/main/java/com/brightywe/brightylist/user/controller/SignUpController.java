@@ -18,25 +18,37 @@ package com.brightywe.brightylist.user.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.brightywe.brightylist.user.model.dto.SignUpUserDto;
 import com.brightywe.brightylist.user.service.SignUpService;
 
+/**
+ *Class SignUpController as RestController of API for comunication with Front End.
+ *
+ */
 @RestController
 @PreAuthorize("permitAll()")
 @RequestMapping("/signup")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SignUpController {
 
     @Autowired
     private SignUpService signUpService;
 
     @PostMapping
-    public void signUpUser(@Valid @RequestBody SignUpUserDto userDto) {
-        signUpService.signUpUser(userDto);
+    public boolean signUpUser(@Valid @RequestBody SignUpUserDto userDto) {
+        try {
+        return signUpService.signUpUser(userDto);
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, exception.getMessage(), exception);
+        }
     }
 }

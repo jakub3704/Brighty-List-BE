@@ -23,6 +23,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.brightywe.brightylist.user.model.domain.User;
 
+/**
+ * Class CustomUserDetails as custom user used for web security, extends User of springframework security.
+ */
 public class CustomUserDetails extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = 1L;

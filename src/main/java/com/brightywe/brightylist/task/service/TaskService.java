@@ -40,20 +40,24 @@ import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.repository.ReminderRepository;
 import com.brightywe.brightylist.task.repository.TaskRepository;
 
+/**
+ *Class TaskService as service of API for Task related actions.
+ *
+ */
 @Service
 public class TaskService {
 
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @Autowired
-    AuthenticationDetailsContext authenticationDetailsContext;
+    private AuthenticationDetailsContext authenticationDetailsContext;
 
     @Autowired
-    ReminderRepository reminderRepository;
+    private ReminderRepository reminderRepository;
     
     @Autowired
-    TaskReminderMapper taskReminderMapper;
+    private TaskReminderMapper taskReminderMapper;
     
     private Logger log = LoggerFactory.getLogger(TaskService.class);
     
@@ -140,11 +144,19 @@ public class TaskService {
         addBasicReminders(task);
         return taskReminderMapper.mapToTaskDto(taskRepository.save(task));
     }
-
+    
     public TaskDto updateTaskByUser(Long taskId, @Valid TaskDto taskDto) throws ResourceNotFoundException {
         Task task = taskRepository.findByTaskIdAndUserId(taskId, authenticationDetailsContext.getUser().getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Taks", "taskId", Long.toString(taskId)));
-        taskReminderMapper.mapToExistingTaskWithoutReminders(taskDto, task);
+        
+        if (task.getStartTime().isEqual(taskDto.getStartTime()) && task.getEndTime().isEqual(taskDto.getEndTime())) {
+            taskReminderMapper.mapToExistingTaskWithoutReminders(taskDto, task);
+        } else {
+            taskReminderMapper.mapToExistingTaskWithoutReminders(taskDto, task);
+            task.getReminders().clear();      
+            addBasicReminders(task);
+        }
+               
         return taskReminderMapper.mapToTaskDto(taskRepository.save(task));
     }
 
@@ -195,9 +207,8 @@ public class TaskService {
     }    
     
     void addBasicReminders(Task task) {
-        setReminder(task, task.getStartTime());
-        if (Duration.between(task.getStartTime(), task.getEndTime()).getSeconds() >= Duration.ofHours(4L)
-                .getSeconds()) {
+            setReminder(task, task.getStartTime());   
+        if (Duration.between(task.getStartTime(), task.getEndTime()).getSeconds() >= Duration.ofHours(4L).getSeconds()) {
             setReminder(task, task.getEndTime());
         }
     }

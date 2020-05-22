@@ -31,6 +31,10 @@ import com.brightywe.brightylist.user.model.domain.User;
 import com.brightywe.brightylist.user.repository.PasswordResetTokenRepository;
 import com.brightywe.brightylist.user.repository.UserRepository;
 
+/**
+ *Class PasswordResetTokenService as service of API for managing and sendig reset password links to the user.
+ *
+ */
 @Service
 public class PasswordResetTokenService {
 

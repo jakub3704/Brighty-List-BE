@@ -22,6 +22,9 @@ import javax.validation.constraints.NotBlank;
 
 import com.brightywe.brightylist.task.model.dto.ReminderDto;
 
+/**
+ * Class Reminder as database entity for storing task reminders.
+ */
 @Entity
 @Table(name = "reminders")
 public class Reminder {

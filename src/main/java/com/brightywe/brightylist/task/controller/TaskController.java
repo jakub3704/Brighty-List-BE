@@ -39,6 +39,11 @@ import com.brightywe.brightylist.task.model.dto.ReminderDto;
 import com.brightywe.brightylist.task.model.dto.TaskDto;
 import com.brightywe.brightylist.task.service.TaskService;
 
+/**
+ *Class TaskController as RestController of API for comunication with Front End.
+ *
+ *Responisible for managing request connected with tasks.
+ */
 @RestController
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
 @CrossOrigin(origins = "http://localhost:4200")
