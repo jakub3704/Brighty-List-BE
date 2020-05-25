@@ -15,7 +15,10 @@
 
 package com.brightywe.brightylist.user.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +44,24 @@ public class PasswordResetTokenController {
     @Autowired
     private PasswordResetTokenService passwordResetTokenService;
     
+    @Value("#{new Boolean('${value.features.reset_token.disabled}')}")
+    private Boolean resetTokenDisabled;
+    
+    private Logger log = LoggerFactory.getLogger(PasswordResetTokenController.class);
+    
+    @GetMapping("/isResetTokenDisabled")
+    public boolean isResetTokenDisabled() {
+        return resetTokenDisabled;
+    }
+    
     @PostMapping
     public void getResetPasswordLink(@RequestBody String eMail) {
+        if (resetTokenDisabled) {
+            log.info("| RESET PASSWORD TOKEN | SENDING DISABLED |");
+        } else {
         passwordResetTokenService.getResetPasswordLink(eMail);
+        log.info("| RESET PASSWORD TOKEN | SENDING ENABLED |");
+    }  
     }
     
     @GetMapping

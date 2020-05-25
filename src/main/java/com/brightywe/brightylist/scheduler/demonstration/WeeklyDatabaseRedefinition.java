@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.brightywe.brightylist.email.repository.EmailQueueRepository;
 import com.brightywe.brightylist.email.repository.OverdueEmailQueueRepository;
-import com.brightywe.brightylist.task.repository.ReminderRepository;
 import com.brightywe.brightylist.task.repository.TaskRepository;
 import com.brightywe.brightylist.user.model.Role;
 import com.brightywe.brightylist.user.model.domain.User;
@@ -22,38 +22,36 @@ import com.brightywe.brightylist.user.repository.UserRepository;
 /**
  * Class WeeklyDatabaseRedefinition for sredefinition of exemplary database.
  */
-@Component
-public class WeeklyDatabaseRedefinition {
+public class WeeklyDatabaseRedefinition implements InitializingBean {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private TaskRepository taskRepository;
-    
-    @Autowired
-    private ReminderRepository reminderRepository;
-    
+
     @Autowired
     private EmailQueueRepository emailQueueRepository;
 
     @Autowired
     private OverdueEmailQueueRepository overdueEmailQueueRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
-    
+
     @Autowired
     TasksDefinition tasksDefinition;
     
+    @Value("#{new Boolean('${value.sheduled.database_initialization.disabled}')}")
+    private Boolean databaseInitializationDisabled;
+        
     private Logger log = LoggerFactory.getLogger(WeeklyDatabaseRedefinition.class);
-    
-    @Scheduled(cron = "0 37 10 ? * *")
+
+    @Scheduled(cron = "0 0 12 ? * SUN")
     public void redefineDatabase() {
-        log.info("| DATABASE REDEFINITION | START |");
         clearDatabase();
         List<User> users = redefineUsers();
         setTasksForUser(users);
@@ -61,24 +59,22 @@ public class WeeklyDatabaseRedefinition {
     }
 
     private void setTasksForUser(List<User> users) {
-        for (User user: users) {
+        for (User user : users) {
             taskRepository.saveAll(tasksDefinition.setTaskForUser(user.getId()));
-        }    
+        }
     }
 
-    private List<User> redefineUsers() { 
+    private List<User> redefineUsers() {
         List<User> users = this.addTestUsers();
         return userRepository.saveAll(users);
     }
-    
+
     private void clearDatabase() {
         userRepository.deleteAll();
         taskRepository.deleteAll();
-        reminderRepository.deleteAll();  
-        emailQueueRepository.deleteAll();  
-        overdueEmailQueueRepository.deleteAll();  
-        passwordResetTokenRepository.deleteAll();  
-        log.info("| DATABASE REDEFINITION | DATABASE CLEARED |");
+        emailQueueRepository.deleteAll();
+        overdueEmailQueueRepository.deleteAll();
+        passwordResetTokenRepository.deleteAll();
     }
 
     private List<User> addTestUsers() {
@@ -114,5 +110,15 @@ public class WeeklyDatabaseRedefinition {
         user.setPassword(passwordEncoder.encode("userC"));
         user.setRole(Role.ROLE_USER);
         return user;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (!databaseInitializationDisabled) {
+            clearDatabase();
+            List<User> users = redefineUsers();
+            setTasksForUser(users);
+            log.info("| DATABASE INITIALIZATION | USER AND TASKS SET |"); 
+        }
     }
 }

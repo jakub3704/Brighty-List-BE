@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,9 +56,7 @@ public class TaskService {
     
     @Autowired
     private TaskReminderMapper taskReminderMapper;
-    
-    private Logger log = LoggerFactory.getLogger(TaskService.class);
-    
+        
     public List<TaskDto> getAllTasksByUser() {
         checkForCompleted();
         List<Task> tasks = taskRepository.findAllByUserId(authenticationDetailsContext.getUser().getUserId());
@@ -79,7 +75,6 @@ public class TaskService {
         if (taskFilter.getKey().equals("status")) {                       
             List<TaskDto> tasks = this.getAllTasksByUser();
             List<TaskDto> filteredTasks = new ArrayList<>();
-            log.info(taskFilter + " - " + taskFilter.getKey() + " - " + taskFilter.getData());
             for (TaskDto task: tasks) {
                 if (task.getStatus().name().contains(taskFilter.getData())) {
                     filteredTasks.add(task);

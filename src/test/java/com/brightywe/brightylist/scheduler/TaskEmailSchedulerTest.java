@@ -7,9 +7,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 public class TaskEmailSchedulerTest {
-    
-
-    
+        
     @Test
     public void testDateIsEqual_1() {
         TaskEmailScheduler scheduler = new TaskEmailScheduler();

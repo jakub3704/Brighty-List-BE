@@ -17,6 +17,8 @@ package com.brightywe.brightylist.user.service;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,15 +41,17 @@ public class SignUpService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    private Logger log = LoggerFactory.getLogger(SignUpService.class);
+    
     public boolean signUpUser(@Valid SignUpUserDto signUpUserDto) {
-        if (userRepository.count() >= 6) {
-            return false;
-        } else if (userRepository.count() <6) {
+        if (userRepository.count() <6) {
             userRepository.save(mapToNewUser(signUpUserDto));
+            log.info("| USER CREATED | NAME=" + signUpUserDto.getName());
             return true;
         } else {
-            throw new RuntimeException();
-        }
+            log.info("| FAILED TO CREATE USER | NAME=" + signUpUserDto.getName());
+            return false;
+        } 
     }
     
     User mapToNewUser(SignUpUserDto userDto) {

@@ -46,7 +46,7 @@ public class TasksDefinition {
         Task task = new Task();
         task.setUserId(userId);
         task.setTitle("Jogging");
-        task.setNotes("Go do something!.");    
+        task.setNotes("Go do something!");    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(0, 18, 0).minusDays(3));
         task.setEndTime(task.getStartTime().plusHours(1));
@@ -61,7 +61,7 @@ public class TasksDefinition {
         Task task = new Task();
         task.setUserId(userId);
         task.setTitle("Weekly conferance");
-        task.setNotes("Discuss previous and new week at work");    
+        task.setNotes("Discuss previous and new week at work.");    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(1, 10, 0));
         task.setEndTime(task.getStartTime().plusHours(2));
@@ -91,7 +91,7 @@ public class TasksDefinition {
         Task task = new Task();
         task.setUserId(userId);
         task.setTitle("Jogging");
-        task.setNotes("Go do something!.");    
+        task.setNotes("Go do something!");    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(4, 18, 0));
         task.setEndTime(task.getStartTime().plusHours(1));

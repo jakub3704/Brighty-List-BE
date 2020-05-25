@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import com.brightywe.brightylist.email.service.EmailSendingService;
 import com.brightywe.brightylist.task.model.domain.Reminder;
@@ -36,7 +35,6 @@ import com.brightywe.brightylist.user.repository.UserRepository;
 /**
  * Class TaskEmailScheduler for scheduled sending of e-Mails with reminders
  */
-@Component
 public class TaskEmailScheduler {
 
     @Autowired

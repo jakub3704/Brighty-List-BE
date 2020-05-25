@@ -10,8 +10,6 @@
         relativeToChangelogFile="true" />
     <include file="changes/changes_users.xml"
         relativeToChangelogFile="true" />
-    <include file="changes/changes_base_users.xml"
-        relativeToChangelogFile="true" />
     <include file="changes/changes_tasks_v1.xml"
         relativeToChangelogFile="true" />
     <include file="changes/changes_tasks_v2.xml"

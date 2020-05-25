@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -45,6 +46,7 @@ import com.brightywe.brightylist.task.service.TaskService;
  *Responisible for managing request connected with tasks.
  */
 @RestController
+@RequestMapping("/tasks")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
 @CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
@@ -52,27 +54,27 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @GetMapping("/tasks")
+    @GetMapping
     public List<TaskDto> getAllTasks() {
         return taskService.getAllTasksByUser();
     }
 
-    @GetMapping("/tasks/search={searchInput}")
+    @GetMapping("/search={searchInput}")
     public List<TaskDto> searchByTitle(@PathVariable(value = "searchInput") String searchInput) {
         return taskService.searchByTitle(searchInput);
     }
 
-    @GetMapping("/tasks/filter")
+    @GetMapping("/filter")
     public List<TaskDto> filter(@RequestParam(value = "option") String option) {
         return taskService.filter(option);
     }
     
-    @GetMapping("/tasks/sort")
+    @GetMapping("/sort")
     public List<TaskDto> sort(@RequestParam(value = "option") String option) {
         return taskService.sort(option);
     }
     
-    @GetMapping("/tasks/{taskId}")
+    @GetMapping("/{taskId}")
     public TaskDto getTaskByIdAndUserId(@PathVariable(value = "taskId") Long taskId) {
         try {
             return taskService.getTaskByIdAndUser(taskId);
@@ -81,12 +83,12 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/tasks")
+    @PostMapping
     public TaskDto createTask(@Valid @RequestBody TaskDto taskDto) {
         return taskService.createTaskByUser(taskDto);
     }
 
-    @PutMapping("/tasks/{taskId}")
+    @PutMapping("/{taskId}")
     public TaskDto updateTask(@PathVariable(value = "taskId") Long taskId, @Valid @RequestBody TaskDto taskDto) {
         try {
             return taskService.updateTaskByUser(taskId, taskDto);
@@ -96,7 +98,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/tasks/complete/{taskId}")
+    @GetMapping("/complete/{taskId}")
     public TaskDto completeTask(@PathVariable(value = "taskId") Long taskId) {
         try {
             return taskService.completeTask(taskId);
@@ -106,7 +108,7 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping("/tasks/{taskId}")
+    @DeleteMapping("/{taskId}")
     public boolean deleteTask(@PathVariable(value = "taskId") Long taskId) {
         try {
             return taskService.deleteTaskByUser(taskId);
@@ -116,7 +118,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/tasks/{taskId}/reminders/{reminderId}")
+    @GetMapping("/{taskId}/reminders/{reminderId}")
     public ReminderDto findReminder(@PathVariable(value = "taskId") Long taskId,
             @PathVariable(value = "reminderId") Long reminderId) {
         try {

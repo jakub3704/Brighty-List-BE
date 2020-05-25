@@ -38,6 +38,7 @@ public class BrightyResourceServerConfig extends ResourceServerConfigurerAdapter
         .antMatchers("/").permitAll()
         .antMatchers("/signup").permitAll()
         .antMatchers("/reset").permitAll()
+        .antMatchers("/reset/isResetTokenDisabled").permitAll()
         .antMatchers("/oauth/token").permitAll()
         .and().exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());

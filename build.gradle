@@ -38,7 +38,6 @@ dependencies {
     testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.junit.platform:junit-platform-launcher:1.5.2'
-    
 }
 
 jacoco {

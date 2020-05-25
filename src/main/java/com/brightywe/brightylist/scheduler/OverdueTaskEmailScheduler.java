@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import com.brightywe.brightylist.email.service.EmailSendingService;
 import com.brightywe.brightylist.task.model.dto.TaskDto;
@@ -31,7 +30,6 @@ import com.brightywe.brightylist.task.service.TaskService;
  * Class OverdueTaskEmailScheduler for scheduled sending of e-Mails with tasks
  * that are overdue.
  */
-@Component
 public class OverdueTaskEmailScheduler {
 
     @Autowired

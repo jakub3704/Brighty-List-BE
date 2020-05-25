@@ -1,6 +1,7 @@
 package com.brightywe.brightylist.user.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.UUID;
@@ -75,11 +76,18 @@ public class SingUpControllerIntegrationTest {
         
         result.andExpect(status().isOk());       
         
+        if (userRepository.count() <6) {
+        result.andExpect(content().string("true"));
+        
         this.userDb = userRepository.findByName(newUser.getName()).orElse(null);
 
         assertEquals(newUser.getName(), userDb.getName());
         assertEquals(newUser.getEmail(), userDb.getEmail());
         assertEquals(true, passwordEncoder.matches(newUser.getPassword(), userDb.getPassword()));
-        assertEquals(Role.ROLE_USER, userDb.getRole());       
+        assertEquals(Role.ROLE_USER, userDb.getRole());  
+        } else {
+            result.andExpect(content().string("false"));
+        }
+
     }
 }

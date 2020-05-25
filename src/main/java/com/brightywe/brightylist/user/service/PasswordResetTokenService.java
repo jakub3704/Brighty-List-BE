@@ -51,17 +51,17 @@ public class PasswordResetTokenService {
     EmailSendingService emailService;
     
     public void getResetPasswordLink(String eMail) {
-        User user = userRepository.findByEmail(eMail)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "eMail", eMail));
-        
-        List<PasswordResetToken> tokens = passwordResetTokenRepository.findAllByUserId(user.getId());
-        if (!tokens.isEmpty()) {
-            passwordResetTokenRepository.deleteAll(tokens);
-        }
-        
-        String token = UUID.randomUUID().toString();
-        PasswordResetToken passwordResetToken = createPasswordResetTokenForUser(token, user);
-        emailService.sendResetPasswordEmail(passwordResetToken);
+            User user = userRepository.findByEmail(eMail)
+                    .orElseThrow(() -> new ResourceNotFoundException("User", "eMail", eMail));
+            
+            List<PasswordResetToken> tokens = passwordResetTokenRepository.findAllByUserId(user.getId());
+            if (!tokens.isEmpty()) {
+                passwordResetTokenRepository.deleteAll(tokens);
+            }
+            
+            String token = UUID.randomUUID().toString();
+            PasswordResetToken passwordResetToken = createPasswordResetTokenForUser(token, user);
+            emailService.sendResetPasswordEmail(passwordResetToken);      
     }
 
     public boolean validateResetPasswordLink(String token) {

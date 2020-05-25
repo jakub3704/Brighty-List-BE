@@ -11,7 +11,7 @@
     </appender>
   
     <logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG" />
-    <logger name="com.zaxxer.hikari" level="TRACE" />
+
   
     <root level="INFO">
         <appender-ref ref="STDOUT" />
