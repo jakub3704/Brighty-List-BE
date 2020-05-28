@@ -54,6 +54,14 @@ public class SignUpService {
         } 
     }
     
+    public boolean isSignUpPossible() {
+        if (userRepository.count() <6) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     User mapToNewUser(SignUpUserDto userDto) {
         User user = new User();
         user.setName(userDto.getName());
