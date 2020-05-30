@@ -31,7 +31,7 @@ import com.sendgrid.SendGrid;
 public class ApplicationConfig {
     
     /** The Twilio SendGrid user's API key. */
-    private static final String SENDGRID_KEY = "LoL"; // System.getenv("SENDGRID_API_KEY");
+    private static final String SENDGRID_KEY = System.getenv("SENDGRID_API_KEY");
     
     @Bean
     public SendGrid sendGrid() {

@@ -38,7 +38,7 @@ import com.brightywe.brightylist.user.service.PasswordResetTokenService;
 @RestController
 @PreAuthorize("permitAll()")
 @RequestMapping("/reset")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${value.frontend_url}")
 public class PasswordResetTokenController {
   
     @Autowired

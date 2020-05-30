@@ -38,7 +38,7 @@ import com.brightywe.brightylist.user.service.SignUpService;
 @RestController
 @PreAuthorize("permitAll()")
 @RequestMapping("/signup")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${value.frontend_url}")
 public class SignUpController {
 
     @Autowired

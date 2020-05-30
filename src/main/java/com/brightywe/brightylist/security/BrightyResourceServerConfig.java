@@ -53,7 +53,7 @@ public class BrightyResourceServerConfig extends ResourceServerConfigurerAdapter
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/oauth/token").allowedOrigins("http://localhost:4200");
+                registry.addMapping("/oauth/token").allowedOrigins("${value.frontend_url}");
             }
         };
     }

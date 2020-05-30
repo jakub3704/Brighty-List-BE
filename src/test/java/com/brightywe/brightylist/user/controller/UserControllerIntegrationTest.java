@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -35,6 +36,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UserControllerIntegrationTest {
 
     private User userDb;
+    
+    @Value("#{new Boolean('${value.features.user_updates.disabled}')}")
+    private Boolean userOperationsDisabled;
 
     @Autowired
     private MockMvc mvc;
@@ -109,13 +113,18 @@ public class UserControllerIntegrationTest {
                 .perform(MockMvcRequestBuilders.put("/users/password").header("Authorization", "Bearer " + accessToken)
                         .header("Content-Type", "application/json;charset=UTF-8")
                         .contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(newPassword)));
+        
+        if (userOperationsDisabled) {
+            result.andExpect(status().isForbidden());
+        } else {
+            result.andExpect(status().isOk());
 
-        result.andExpect(status().isOk());
+            result.andExpect(jsonPath("$.name", is(user.getName()))).andExpect(jsonPath("$.email", is(user.getEmail())));
 
-        result.andExpect(jsonPath("$.name", is(user.getName()))).andExpect(jsonPath("$.email", is(user.getEmail())));
+            User userDatabase = userRepository.findByName(user.getName()).orElse(null);
 
-        User userDatabase = userRepository.findByName(user.getName()).orElse(null);
+            assertEquals(true, passwordEncoder.matches(newPassword.getPasswordNew(), userDatabase.getPassword()));
+        }
 
-        assertEquals(true, passwordEncoder.matches(newPassword.getPasswordNew(), userDatabase.getPassword()));
     }
 }

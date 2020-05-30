@@ -48,7 +48,7 @@ import com.brightywe.brightylist.task.service.TaskService;
 @RestController
 @RequestMapping("/tasks")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${value.frontend_url}")
 public class TaskController {
 
     @Autowired

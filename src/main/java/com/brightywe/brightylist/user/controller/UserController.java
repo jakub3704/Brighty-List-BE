@@ -42,7 +42,7 @@ import com.brightywe.brightylist.user.service.UserService;
 @RestController
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'ROLE_PREMIUM_USER')")
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${value.frontend_url}")
 @PropertySource({"classpath:values.properties"})
 public class UserController {
 
