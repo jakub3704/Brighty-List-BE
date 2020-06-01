@@ -61,6 +61,6 @@ GRANT SELECT, INSERT, DELETE, UPDATE ON brightdb.* TO 'brightyuser'@'%';
 ```
 # Running
 ```
-gradle build
-gradle run
+gradlew clean build
+gradlew bootRun
 ```
