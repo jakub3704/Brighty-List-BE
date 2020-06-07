@@ -14,148 +14,236 @@ import com.brightywe.brightylist.task.model.domain.Task;
 import com.brightywe.brightylist.task.service.CronExpressionMapper;
 @Component
 public class TasksDefinition {
-
-    public List<Task> setTaskForUser(Long userId){
+    
+    public List<Task> setTaskForUser(Long userId, boolean isPl){
         List<Task> tasks = new ArrayList<>();
-        tasks.add(this.taskA(userId));
-        tasks.add(this.taskB(userId));
-        tasks.add(this.taskC(userId));
-        tasks.add(this.taskD(userId));
-        tasks.add(this.taskE(userId));
-        tasks.add(this.taskF(userId));
-        tasks.add(this.taskG(userId));
-        tasks.add(this.taskH(userId));
+        tasks.add(this.taskA(userId, isPl));
+        tasks.add(this.taskB(userId, isPl));
+        tasks.add(this.taskC(userId, isPl));
+        tasks.add(this.taskD(userId, isPl));
+        tasks.add(this.taskE(userId, isPl));
+        tasks.add(this.taskF(userId, isPl));
+        tasks.add(this.taskG(userId, isPl));
+        tasks.add(this.taskH(userId, isPl));
         return tasks;
     }
     
-    private Task taskA(Long userId) {
+    private Task taskA(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        if (isPl) {
+            title = "Malowanie ścian";
+        } else {
+            title = "Wall painting";
+        }
+        
         task.setUserId(userId);
-        task.setTitle("Wall painting");
+        task.setTitle(title);
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(0, 14, 0).minusDays(8));
         task.setEndTime(task.getStartTime().plusDays(21));
         task.setAutocomplete(false);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 120);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 120, isPl);   
         return task;
     } 
     
-    private Task taskB(Long userId) {
+    private Task taskB(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Bieganie";
+            notes = "Rusz się w końcu!";
+        } else {
+            title = "Jogging";
+            notes = "Go do something!";
+        }
+        
         task.setUserId(userId);
-        task.setTitle("Jogging");
-        task.setNotes("Go do something!");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(0, 18, 0).minusDays(3));
         task.setEndTime(task.getStartTime().plusHours(1));
         task.setAutocomplete(false);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 60);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 60, isPl);   
         return task;
     }
     
-    private Task taskC(Long userId) {
+    private Task taskC(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Cotygodniowa konferencja";
+            notes = "Podsumowanie poprzedniego tygodnia oraz planowanie nowego.";
+        } else {
+            title = "Weekly conference";
+            notes = "Discuss previous and new week at work.";
+        }
         task.setUserId(userId);
-        task.setTitle("Weekly conferance");
-        task.setNotes("Discuss previous and new week at work.");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(1, 10, 0));
         task.setEndTime(task.getStartTime().plusHours(2));
         task.setAutocomplete(true);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 15);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 15, isPl);   
         return task;
     }
     
-    private Task taskD(Long userId) {
+    private Task taskD(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Spotkanie z Janem";
+            notes = "Przedyskutować fundamenty projektowanego domu.";
+        } else {
+            title = "Meeting with John";
+            notes = "Discuss foundations of his newly designed house.";
+        }
         task.setUserId(userId);
-        task.setTitle("Meeting with John");
-        task.setNotes("Discuss foundations of his newly designed house.");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(1, 18, 30));
         task.setEndTime(task.getStartTime().plusHours(2));
         task.setAutocomplete(true);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 60);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 60, isPl);   
         return task;
     }
     
-    private Task taskE(Long userId) {
+    private Task taskE(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Bieganie";
+            notes = "Rusz się w końcu!";
+        } else {
+            title = "Jogging";
+            notes = "Go do something!";
+        }
         task.setUserId(userId);
-        task.setTitle("Jogging");
-        task.setNotes("Go do something!");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(4, 18, 0));
         task.setEndTime(task.getStartTime().plusHours(1));
         task.setAutocomplete(false);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 60);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 60, isPl);   
         return task;
     }
     
-    private Task taskF(Long userId) {
+    private Task taskF(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Zakupy";
+            notes = "Muszę kupić nowe koszule.";
+        } else {
+            title = "Shoping";
+            notes = "I need new shirts.";
+        }
         task.setUserId(userId);
-        task.setTitle("Shoping");
-        task.setNotes("I need new shirts.");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(2, 17, 00));
         task.setEndTime(task.getStartTime().plusHours(4));
         task.setAutocomplete(true);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 30);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 30, isPl);   
         return task;
     }
     
-    private Task taskG(Long userId) {
+    private Task taskG(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Nauka rysowania";
+            notes = "Narysuj coś!";
+        } else {
+            title = "Learning how to draw";
+            notes = "Draw something!";
+        }
         task.setUserId(userId);
-        task.setTitle("Learning how to draw");
-        task.setNotes("Draw something!");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(3, 19,0));
         task.setEndTime(task.getStartTime().plusHours(1));
         task.setAutocomplete(false);
         task.setCompleted(false);
-        addBasicReminders(task);
-        addBeforeReminder(task, 15);   
+        addBasicReminders(task, isPl);
+        addBeforeReminder(task, 15, isPl);   
         return task;
     }
     
-    private Task taskH(Long userId) {
+    private Task taskH(Long userId, boolean isPl) {
         Task task = new Task();
+        String title;
+        String notes;
+        if (isPl) {
+            title = "Oglądanie gwiazd";
+            notes = "Mam nadzieję że będzie przejrzyste niebo.";
+        } else {
+            title = "Star waching";
+            notes = "Hope it will be clear sky.";
+        }
         task.setUserId(userId);
-        task.setTitle("Star waching");
-        task.setNotes("Hope it will be clear sky.");    
+        task.setTitle(title);
+        task.setNotes(notes);    
         task.setPriority(generatePriority());
         task.setStartTime(generateStartTime(5, 22, 0));
         task.setEndTime(task.getStartTime());
         task.setAutocomplete(true);
         task.setCompleted(false);
-        addBeforeReminder(task, 120);   
-        addBasicReminders(task);
+        addBeforeReminder(task, 120, isPl);   
+        addBasicReminders(task, isPl);
         return task;
     } 
-      
-    private void addBeforeReminder(Task task, int minutes) {
-        setReminder(task, task.getStartTime().minusMinutes(minutes), "Your tasks will start in " + minutes + " minutes"); 
-        
+       
+    private void addBeforeReminder(Task task, int minutes, boolean isPl) {
+        String message;
+        String minutesText;
+        if (isPl) {
+            message = "Twoje zadanie rozpocznie się za ";
+            minutesText = " minut";
+        } else {
+            message = "Your tasks will start in ";
+            minutesText = " minutes";
+        }
+        setReminder(task, task.getStartTime().minusMinutes(minutes), message + minutes + minutesText);   
     }
     
-    private void addBasicReminders(Task task) {
-        setReminder(task, task.getStartTime(), "Your tasks starts right now!");   
+    private void addBasicReminders(Task task, boolean isPl) {
+        String messageStart;
+        String messageEnd;
+        if (isPl) {
+            messageStart = "Twoje zadanie rozpocznie się za ";
+            messageEnd = "Twoje zadanie rozpocznie się za ";
+        } else {
+            messageStart = "Your tasks starts right now!";
+            messageEnd = "Your tasks ends right now!";
+        }
+        setReminder(task, task.getStartTime(), messageStart);   
     if (Duration.between(task.getStartTime(), task.getEndTime()).getSeconds() >= Duration.ofHours(4L).getSeconds()) {
-        setReminder(task, task.getEndTime(), "Your tasks ends right now!");
+        setReminder(task, task.getEndTime(), messageEnd);
     }
 }
 

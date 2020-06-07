@@ -59,8 +59,9 @@ public class WeeklyDatabaseRedefinition implements InitializingBean {
     }
 
     private void setTasksForUser(List<User> users) {
-        for (User user : users) {
-            taskRepository.saveAll(tasksDefinition.setTaskForUser(user.getId()));
+        if (!users.isEmpty()) {
+            taskRepository.saveAll(tasksDefinition.setTaskForUser(users.get(0).getId(), true));
+            taskRepository.saveAll(tasksDefinition.setTaskForUser(users.get(1).getId(), false));
         }
     }
 
@@ -79,35 +80,25 @@ public class WeeklyDatabaseRedefinition implements InitializingBean {
 
     private List<User> addTestUsers() {
         List<User> users = new ArrayList<>();
-        users.add(addUserA());
-        users.add(addUserB());
-        users.add(addUserC());
+        users.add(addUserPL());
+        users.add(addUserEN());
         return users;
     }
 
-    private User addUserA() {
+    private User addUserPL() {
         User user = new User();
-        user.setName("userA");
-        user.setEmail("userA@test");
-        user.setPassword(passwordEncoder.encode("userA"));
+        user.setName("userPL");
+        user.setEmail("userPL@test");
+        user.setPassword(passwordEncoder.encode("userPL"));
         user.setRole(Role.ROLE_USER);
         return user;
     }
 
-    private User addUserB() {
+    private User addUserEN() {
         User user = new User();
-        user.setName("userB");
-        user.setEmail("userB@test");
-        user.setPassword(passwordEncoder.encode("userB"));
-        user.setRole(Role.ROLE_USER);
-        return user;
-    }
-
-    private User addUserC() {
-        User user = new User();
-        user.setName("userC");
-        user.setEmail("userC@test");
-        user.setPassword(passwordEncoder.encode("userC"));
+        user.setName("userEN");
+        user.setEmail("userEN@test");
+        user.setPassword(passwordEncoder.encode("userEN"));
         user.setRole(Role.ROLE_USER);
         return user;
     }
