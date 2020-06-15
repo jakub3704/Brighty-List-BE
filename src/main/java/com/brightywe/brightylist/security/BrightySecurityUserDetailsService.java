@@ -14,6 +14,8 @@
  *****************************************************************************/
 package com.brightywe.brightylist.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +31,8 @@ import com.brightywe.brightylist.user.repository.UserRepository;
  */
 @Service
 public class BrightySecurityUserDetailsService implements UserDetailsService {
+    
+    private Logger log = LoggerFactory.getLogger(BrightySecurityUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -40,6 +44,7 @@ public class BrightySecurityUserDetailsService implements UserDetailsService {
             if (user==null) {
                 throw new UsernameNotFoundException("UserName "+ username +" not found");
             }
+            log.info("| LOADED USER = " + username + " |");
             return new CustomUserDetails(user);
     }
       

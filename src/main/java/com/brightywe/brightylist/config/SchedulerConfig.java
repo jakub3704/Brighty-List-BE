@@ -15,6 +15,8 @@
 
 package com.brightywe.brightylist.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,21 +34,26 @@ import com.brightywe.brightylist.scheduler.demonstration.WeeklyDatabaseRedefinit
 @PropertySource({"classpath:values.properties"})
 public class SchedulerConfig {
     
+    private Logger log = LoggerFactory.getLogger(SchedulerConfig.class);
+    
     @Bean
-    @ConditionalOnProperty(value = "value.sheduled.weekly_database_redefinition.disabled", matchIfMissing = true, havingValue = "false")
+    @ConditionalOnProperty(value = "value.sheduled.weekly_database_redefinition.disabled", matchIfMissing = false, havingValue = "false")
     public WeeklyDatabaseRedefinition weeklyDatabaseRedefinition() {
+        log.info("| CREATED Bean WeeklyDatabaseRedefinition |");
         return new WeeklyDatabaseRedefinition();
     }
     
     @Bean
     @ConditionalOnProperty(value = "value.sheduled.task_email_scheduler.disabled", matchIfMissing = true, havingValue = "false")
     public TaskEmailScheduler taskEmailScheduler() {
+        log.info("| CREATED Bean TaskEmailScheduler |");
         return new TaskEmailScheduler();
     }
     
     @Bean
     @ConditionalOnProperty(value = "value.sheduled.overdue_task_email_scheduler.disabled", matchIfMissing = true, havingValue = "false")
     public OverdueTaskEmailScheduler overdueTaskEmailScheduler() {
+        log.info("| CREATED Bean OverdueTaskEmailScheduler |");
         return new OverdueTaskEmailScheduler();
     }
 }

@@ -46,10 +46,10 @@ public class SignUpService {
     public boolean signUpUser(@Valid SignUpUserDto signUpUserDto) {
         if (userRepository.count() <6) {
             userRepository.save(mapToNewUser(signUpUserDto));
-            log.info("| USER CREATED | NAME=" + signUpUserDto.getName());
+            log.info("| USER CREATED | NAME = " + signUpUserDto.getName());
             return true;
         } else {
-            log.info("| FAILED TO CREATE USER | NAME=" + signUpUserDto.getName());
+            log.info("| FAILED TO CREATE USER | NAME = " + signUpUserDto.getName());
             return false;
         } 
     }

@@ -32,12 +32,12 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {   
-        log.info("| " + request.getRequestURL().toString() + " | " + request.getAuthType() + " | " + request.getMethod()  + " |");  
+        log.info("| " + request.getMethod()  + " | " + request.getRequestURL().toString() + " |");  
         return true;
     }
  
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        log.info("| " + response.getContentType() + " | " + response.getStatus()  + " |");
+        log.info("| " + response.getStatus() + " | " + response.getContentType() + " |");
     }
 }
